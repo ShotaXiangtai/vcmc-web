@@ -11,7 +11,7 @@
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     if (metaTheme) {
-      metaTheme.setAttribute('content', theme === 'dark' ? '#0f1117' : '#fcfcfd');
+      metaTheme.setAttribute('content', theme === 'dark' ? '#1d1d1d' : '#fff');
     }
   }
 
@@ -84,26 +84,6 @@
     { threshold: 0.08 }
   );
   revealEls.forEach(el => observer.observe(el));
-})();
-
-// ── コマンドチップのクリックコピー ──
-(function initCommandCopy() {
-  const chips = document.querySelectorAll('.cmd-code, .shop-cmd-chip');
-  if (!chips.length) return;
-
-  chips.forEach(chip => {
-    chip.title = 'クリックしてコピー';
-    chip.addEventListener('click', () => {
-      const raw = chip.dataset.orig || chip.textContent.trim();
-      chip.dataset.orig = raw;
-      navigator.clipboard.writeText(raw).then(() => {
-        chip.textContent = '✓ Copied!';
-        setTimeout(() => {
-          chip.textContent = raw;
-        }, 1200);
-      }).catch(() => {});
-    });
-  });
 })();
 
 // ── ページトップへ戻るボタン（404 などボタンのないページでは何もしない） ──
