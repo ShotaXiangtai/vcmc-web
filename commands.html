@@ -72,69 +72,59 @@
         <div class="tabs">
           <button class="tab-btn active" data-tab="basic">基本コマンド</button>
           <button class="tab-btn" data-tab="bolt">チェスト保護</button>
-          <button class="tab-btn" data-tab="bluemap">Bluemap</button>
           <button class="tab-btn" data-tab="stream">配信・撮影</button>
           <button class="tab-btn" data-tab="vote">投票</button>
         </div>
 
         <div class="tab-panel active" id="tab-basic">
           <ul class="cmd-list">
-            <li><span class="cmd-code">/hub</span><span class="cmd-desc">ハブへ移動する</span></li>
+            <li><span class="cmd-code">/hub</span><span class="cmd-desc">ハブ（ロビー）へ移動する</span></li>
             <li><span class="cmd-code">/sit</span><span class="cmd-desc">地面に座る</span></li>
             <li><span class="cmd-code">/lay</span><span class="cmd-desc">地面に横になる</span></li>
             <li><span class="cmd-code">/crawl</span><span class="cmd-desc">地面を這う</span></li>
             <li><span class="cmd-code">/spin</span><span class="cmd-desc">くるくる回る</span></li>
-            <li><span class="cmd-code">/bellyhop</span><span class="cmd-desc">腹ばいで跳ねる</span></li>
-            <li><span class="cmd-code">/vcp inspect</span><span class="cmd-desc">ブロックの変更履歴を確認するインスペクトモード（<span style="opacity:0.6">i</span> でも可）</span></li>
-            <li><span class="cmd-code">/gchest</span><span class="cmd-desc">自分専用の共有チェストを開く。どのサーバーから開いても中身が同期される</span></li>
+            <li><span class="cmd-code">/co i</span><span class="cmd-desc">ブロックの変更履歴を確認する（CoreProtect インスペクトモードのON/OFF。※一般権限では co i のみ使用可能）</span></li>
+            <li><span class="cmd-code">/gchest</span><span class="cmd-desc">自分専用の共有チェストを開く（どのサーバーから開いても中身が同期）</span></li>
           </ul>
         </div>
 
         <div class="tab-panel" id="tab-bolt">
           <p class="cmd-sub-title">ロック操作</p>
           <ul class="cmd-list" style="margin-bottom:28px">
-            <li><span class="cmd-code">/bolt lock</span><span class="cmd-desc">ブロックを private 保護（コマンド後にブロックをクリック）</span></li>
-            <li><span class="cmd-code">/bolt lock public</span><span class="cmd-desc">誰でも使えるが壊せないロック</span></li>
-            <li><span class="cmd-code">/bolt lock display</span><span class="cmd-desc">中身を見せるだけ（取り出し不可）</span></li>
-            <li><span class="cmd-code">/bolt lock deposit</span><span class="cmd-desc">誰でも入れられる、取り出しは自分のみ</span></li>
+            <li><span class="cmd-code">/bolt lock</span><span class="cmd-desc">ブロックを private 保護（実行後に対象ブロックをクリック）</span></li>
+            <li><span class="cmd-code">/bolt lock public</span><span class="cmd-desc">誰でも利用可能だが破壊不可なロック</span></li>
+            <li><span class="cmd-code">/bolt lock display</span><span class="cmd-desc">中身を見せるだけ（アイテム取り出し不可）</span></li>
+            <li><span class="cmd-code">/bolt lock deposit</span><span class="cmd-desc">誰でも投入可能、取り出しは自分のみ</span></li>
             <li><span class="cmd-code">/bolt lock withdrawal</span><span class="cmd-desc">取り出しのみ許可</span></li>
-            <li><span class="cmd-code">/bolt unlock</span><span class="cmd-desc">保護を解除（クリックで適用）</span></li>
-            <li><span class="cmd-code">/bolt info</span><span class="cmd-desc">保護情報（所有者・日時・アクセスリスト）を確認</span></li>
+            <li><span class="cmd-code">/bolt unlock</span><span class="cmd-desc">保護を解除（実行後にクリックで適用）</span></li>
+            <li><span class="cmd-code">/bolt info</span><span class="cmd-desc">保護情報（所有者・作成日時・アクセスリスト等）を確認</span></li>
           </ul>
-          <p class="cmd-sub-title">アクセス管理</p>
+          <p class="cmd-sub-title">アクセス管理・権限</p>
           <ul class="cmd-list" style="margin-bottom:28px">
-            <li><span class="cmd-code">/bolt edit add &lt;名前&gt;</span><span class="cmd-desc">プレイヤーにアクセスを追加（クリックで適用）</span></li>
-            <li><span class="cmd-code">/bolt edit remove &lt;名前&gt;</span><span class="cmd-desc">プレイヤーのアクセスを削除</span></li>
+            <li><span class="cmd-code">/bolt edit add &lt;名前&gt;</span><span class="cmd-desc">プレイヤーにアクセス権を追加（実行後にクリックで適用）</span></li>
+            <li><span class="cmd-code">/bolt edit remove &lt;名前&gt;</span><span class="cmd-desc">プレイヤーのアクセス権を削除</span></li>
             <li><span class="cmd-code">/bolt modify add normal player &lt;名前&gt;</span><span class="cmd-desc">ACLに詳細なアクセス権を追加</span></li>
             <li><span class="cmd-code">/bolt modify remove normal player &lt;名前&gt;</span><span class="cmd-desc">ACLからアクセス権を削除</span></li>
-            <li><span class="cmd-code">/bolt trust add player &lt;名前&gt;</span><span class="cmd-desc">自分の全保護へのアクセスを許可（グローバル）</span></li>
+            <li><span class="cmd-code">/bolt trust add player &lt;名前&gt;</span><span class="cmd-desc">自分の全保護へのアクセスを許可（グローバルトラスト）</span></li>
             <li><span class="cmd-code">/bolt trust remove player &lt;名前&gt;</span><span class="cmd-desc">グローバルトラストを解除</span></li>
-            <li><span class="cmd-code">/bolt transfer &lt;名前&gt;</span><span class="cmd-desc">保護の所有権を譲渡（クリックで適用）</span></li>
+            <li><span class="cmd-code">/bolt transfer &lt;名前&gt;</span><span class="cmd-desc">保護の所有権を別プレイヤーへ譲渡（実行後にクリックで適用）</span></li>
           </ul>
-          <p class="cmd-sub-title">グループ</p>
+          <p class="cmd-sub-title">グループ管理</p>
           <ul class="cmd-list" style="margin-bottom:28px">
-            <li><span class="cmd-code">/bolt group create &lt;グループ名&gt;</span><span class="cmd-desc">グループを作成</span></li>
+            <li><span class="cmd-code">/bolt group create &lt;グループ名&gt;</span><span class="cmd-desc">グループを新規作成</span></li>
             <li><span class="cmd-code">/bolt group add &lt;グループ名&gt; &lt;名前&gt;</span><span class="cmd-desc">グループにメンバーを追加</span></li>
             <li><span class="cmd-code">/bolt group remove &lt;グループ名&gt; &lt;名前&gt;</span><span class="cmd-desc">グループからメンバーを削除</span></li>
-            <li><span class="cmd-code">/bolt group list &lt;グループ名&gt;</span><span class="cmd-desc">グループのメンバー一覧</span></li>
+            <li><span class="cmd-code">/bolt group list &lt;グループ名&gt;</span><span class="cmd-desc">グループのメンバー一覧を表示</span></li>
             <li><span class="cmd-code">/bolt group delete &lt;グループ名&gt;</span><span class="cmd-desc">グループを削除</span></li>
           </ul>
-          <p class="cmd-sub-title">モード / その他</p>
+          <p class="cmd-sub-title">モード・その他</p>
           <ul class="cmd-list">
-            <li><span class="cmd-code">/bolt mode persist</span><span class="cmd-desc">連続操作モード ON/OFF</span></li>
+            <li><span class="cmd-code">/bolt mode persist</span><span class="cmd-desc">連続操作モードの ON / OFF 切替</span></li>
             <li><span class="cmd-code">/bolt mode no lock</span><span class="cmd-desc">自動保護を一時無効化</span></li>
             <li><span class="cmd-code">/bolt mode no spam</span><span class="cmd-desc">操作メッセージを非表示</span></li>
-            <li><span class="cmd-code">/bolt password &lt;パスワード&gt;</span><span class="cmd-desc">パスワード保護されたブロックにアクセス</span></li>
-            <li><span class="cmd-code">/bolt help</span><span class="cmd-desc">ヘルプを表示</span></li>
-            <li><span class="cmd-code">/bolt help &lt;コマンド名&gt;</span><span class="cmd-desc">コマンドの詳細を表示</span></li>
-          </ul>
-        </div>
-
-        <div class="tab-panel" id="tab-bluemap">
-          <ul class="cmd-list">
-            <li><span class="cmd-code">/bmpc</span><span class="cmd-desc">Bluemapマーカーの管理</span></li>
-            <li><span class="cmd-code">/bmpc show</span><span class="cmd-desc">マップ上に自分の位置を表示</span></li>
-            <li><span class="cmd-code">/bmpc hide</span><span class="cmd-desc">マップ上から自分の位置を非表示</span></li>
+            <li><span class="cmd-code">/bolt password &lt;パスワード&gt;</span><span class="cmd-desc">パスワード保護されたブロックへアクセス</span></li>
+            <li><span class="cmd-code">/bolt help</span><span class="cmd-desc">Boltのヘルプを表示</span></li>
+            <li><span class="cmd-code">/bolt help &lt;コマンド名&gt;</span><span class="cmd-desc">指定したコマンドの詳細ヘルプを表示</span></li>
           </ul>
         </div>
 
@@ -142,27 +132,27 @@
           <ul class="cmd-list">
             <li><span class="cmd-code">/stream on</span><span class="cmd-desc">配信中であることを表示する</span></li>
             <li><span class="cmd-code">/stream off</span><span class="cmd-desc">配信中表示を解除する</span></li>
-            <li><span class="cmd-code">/rec on</span><span class="cmd-desc">撮影中であることを表示する</span></li>
-            <li><span class="cmd-code">/rec off</span><span class="cmd-desc">撮影中表示を解除する</span></li>
+            <li><span class="cmd-code">/rec on</span><span class="cmd-desc">動画撮影中であることを表示する</span></li>
+            <li><span class="cmd-code">/rec off</span><span class="cmd-desc">動画撮影中表示を解除する</span></li>
           </ul>
         </div>
 
         <div class="tab-panel" id="tab-vote">
           <ul class="cmd-list">
             <li><span class="cmd-code">/vote</span><span class="cmd-desc">投票サイトの一覧を表示する</span></li>
-            <li><span class="cmd-code">/votegui</span><span class="cmd-desc">投票メニューをGUIで開く</span></li>
-            <li><span class="cmd-code">/vote shop</span><span class="cmd-desc">投票ショップを開き、ポイントをアイテムと交換する</span></li>
+            <li><span class="cmd-code">/votegui</span><span class="cmd-desc">投票メニューをGUI画面で開く</span></li>
+            <li><span class="cmd-code">/vote shop</span><span class="cmd-desc">投票ショップを開き、獲得ポイントをアイテムと交換する</span></li>
             <li><span class="cmd-code">/voteshop</span><span class="cmd-desc">/vote shop の省略形</span></li>
             <li><span class="cmd-code">/vote total</span><span class="cmd-desc">自分の合計投票数を確認する</span></li>
-            <li><span class="cmd-code">/vote next</span><span class="cmd-desc">次に投票できるまでの時間を確認する</span></li>
-            <li><span class="cmd-code">/vote last</span><span class="cmd-desc">最後に投票した時間を確認する</span></li>
-            <li><span class="cmd-code">/vote top</span><span class="cmd-desc">トップ投票者ランキングを見る</span></li>
+            <li><span class="cmd-code">/vote next</span><span class="cmd-desc">次に投票できるまでの待ち時間を確認する</span></li>
+            <li><span class="cmd-code">/vote last</span><span class="cmd-desc">最後に投票した日時を確認する</span></li>
+            <li><span class="cmd-code">/vote top</span><span class="cmd-desc">トップ投票者ランキングを表示する</span></li>
             <li><span class="cmd-code">/vote streak</span><span class="cmd-desc">連続投票記録を確認する</span></li>
-            <li><span class="cmd-code">/vote best</span><span class="cmd-desc">過去のベスト投票記録を確認する</span></li>
-            <li><span class="cmd-code">/vote today</span><span class="cmd-desc">本日投票したプレイヤー一覧を見る</span></li>
+            <li><span class="cmd-code">/vote best</span><span class="cmd-desc">過去の自己ベスト投票記録を確認する</span></li>
+            <li><span class="cmd-code">/vote today</span><span class="cmd-desc">本日投票したプレイヤー一覧を確認する</span></li>
             <li><span class="cmd-code">/vote help</span><span class="cmd-desc">投票関連コマンドのヘルプを表示する</span></li>
           </ul>
-          <p style="margin-top:20px;font-size:0.85rem;color:var(--muted)">投票コマンドの詳細は上記をご覧ください。</p>
+          <p style="margin-top:20px;font-size:0.85rem;color:var(--muted)">※ コマンド名をクリックするとクリップボードにコピーできます。</p>
         </div>
       </div>
 
@@ -179,7 +169,41 @@
   </main>
 
   <footer>
-    <div class="container">© <span id="y"></span> VoiceMC. All rights reserved.</div>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html">
+            <img class="logo" src="images/icon.png" alt="VoiceMC logo">
+            <span>VoiceMC</span>
+          </a>
+          <p class="footer-brand-desc">Simple Voice Chat対応の配信フレンドリーなMinecraftサーバー。配信者もリスナーも、近接ボイスチャットで一緒に遊ぼう。</p>
+          <div class="footer-ip"><i class="fa-solid fa-server" aria-hidden="true"></i> vcmc.jp</div>
+        </div>
+        <div class="footer-col">
+          <h4>メニュー</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#how-to">参加方法</a></li>
+            <li><a href="index.html#features">サーバーの特徴</a></li>
+            <li><a href="rules.html">ルール＆ガイドライン</a></li>
+            <li><a href="commands.html">コマンドガイド</a></li>
+            <li><a href="vote.html">投票サイト</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>外部リンク</h4>
+          <ul class="footer-links">
+            <li><a href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">公式Discord ↗</a></li>
+            <li><a href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMap (Bluemap) ↗</a></li>
+            <li><a href="https://status.vcmc.jp/status/vcmc" target="_blank" rel="noopener">サーバーステータス ↗</a></li>
+            <li><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" rel="noopener">Simple Voice Chat ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="y"></span> VoiceMC. All rights reserved.</span>
+        <span>Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</span>
+      </div>
+    </div>
   </footer>
 
   <div class="affiliate-widget">
