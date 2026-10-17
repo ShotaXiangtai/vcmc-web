@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VoiceMC | 配信フレンドリーなボイスサーバー</title>
+  <meta name="description" content="Simple Voice Chat対応のMinecraftサーバー。配信者もリスナーも、誰でも参加OK。近接ボイスチャットでわいわい遊ぼう。" />
+  <meta property="og:title" content="VoiceMC | 配信フレンドリーなボイスサーバー" />
+  <meta property="og:description" content="Simple Voice Chat対応のMinecraftサーバー。配信者もリスナーも、誰でも参加OK。近接ボイスチャットでわいわい遊ぼう。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vcmc.jp/" />
+  <meta property="og:site_name" content="VoiceMC" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#fff" />
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || auto);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top">
+        <img class="logo" src="images/icon.png" alt="VoiceMC logo">
+        <span>VoiceMC</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html#how-to">参加方法</a></li>
+          <li><a href="index.html#features">About</a></li>
+          <li><a href="rules.html">ルール</a></li>
+          <li><a href="commands.html">コマンド</a></li>
+          <li><a href="vote.html">投票</a></li>
+          <li><a href="https://status.vcmc.jp/status/vcmc" target="_blank" rel="noopener">Status</a></li>
+          <li class="nav-mobile-discord" style="display:none">
+            <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="テーマを切り替え">
+          <svg class="icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-badges reveal">
+        <span class="tag">Simple Voice Chat 対応サーバー</span>
+        <span class="badge-java">Java版専用</span>
+      </div>
+      <h1 class="reveal reveal-delay-1">声でつながる、<br>Minecraftの世界。</h1>
+      <p class="reveal reveal-delay-2">配信者も、リスナーも、純粋なサバイバル勢も。<br>近接ボイスチャットで一緒に遊べる、誰でも歓迎のサーバーです。</p>
+
+      <div class="ip-row reveal reveal-delay-3">
+        <span class="ip-code" id="server-ip">vcmc.jp</span>
+        <button class="btn-ghost" onclick="copyIP(this)">IPをコピー</button>
+        <a class="btn-ghost" href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMap ↗</a>
+        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+      </div>
+      <span class="notice reveal">※ サーバーへの参加にはDiscordへの加入を推奨しています</span>
+
+      <div class="reveal">
+        <div class="status-card" id="status-card">
+          <span class="status-loading">ステータスを取得中...</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="how-to">
+      <div class="section-label reveal">参加までの流れ</div>
+      <div class="section-title reveal">3ステップで始める</div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="step-num">Step 01</span>
+          <h3><i class="fa-brands fa-discord" aria-hidden="true"></i> Discordに参加する</h3>
+          <p>まず公式Discordサーバーへの参加を推奨しています。参加前に<a href="rules.html"><b>ルール・禁止事項</b></a>を必ずご確認ください。</p>
+        </div>
+        <div class="step reveal reveal-delay-1">
+          <span class="step-num">Step 02</span>
+          <h3><i class="fa-solid fa-download" aria-hidden="true"></i> Modを導入して接続</h3>
+          <p><b>Simple Voice Chat</b>（Mod）を導入してサーバーに接続。ゲーム内でマイクの設定をすれば準備完了です。</p>
+          <a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" rel="noopener" class="step-link chevron-link">Modrinthでダウンロード ↗</a>
+        </div>
+        <div class="step reveal reveal-delay-2">
+          <span class="step-num">Step 03</span>
+          <h3><i class="fa-solid fa-gamepad" aria-hidden="true"></i> 自由に遊ぶ</h3>
+          <p>サバイバルを楽しむもよし、配信企画に使うもよし。ルールを守って自由に楽しみましょう。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="features">
+      <div class="feature-card reveal">
+        <h2>サーバーの特徴</h2>
+        <ul class="feature-list">
+          <li class="feature-card">
+            <span class="feature-icon"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i></span>
+            <div><b>近接ボイスチャット</b>Simple Voice Chatによる、その場にいるような臨場感のある通話</div>
+          </li>
+          <li class="feature-card">
+            <span class="feature-icon"><i class="fa-solid fa-video" aria-hidden="true"></i></span>
+            <div><b>配信・動画投稿OK</b>配信者向けの配慮も充実しており、安心してコンテンツ制作に使えます</div>
+          </li>
+          <li class="feature-card">
+            <span class="feature-icon"><i class="fa-brands fa-discord" aria-hidden="true"></i></span>
+            <div><b>Discord連携</b>ゲーム内チャットとDiscordが連携。コミュニティとのつながりを大切にしています</div>
+          </li>
+          <li class="feature-card">
+            <span class="feature-icon"><i class="fa-solid fa-map" aria-hidden="true"></i></span>
+            <div><b><a href="https://map.vcmc.jp/" target="_blank" rel="noopener" style="color:inherit">ワールドマップ</a></b>Bluemapによるリアルタイム3Dマップを公開中。ブラウザからいつでもワールドを確認できます</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="container" id="gallery">
+      <div class="section-label reveal">ギャラリー</div>
+      <div class="section-title reveal">サーバーの様子</div>
+      <div class="gallery-grid reveal" id="screenshot-grid"></div>
+    </section>
+
+    <section class="container" id="support">
+      <div class="cta-strip reveal">
+        <div>
+          <h3>お問い合わせ・サポート</h3>
+          <p><b>一般的なサポート</b>は公式Discordのスレッドへどうぞ。</p>
+          <p><b>個人的なサポート</b>（座標や個人情報を含む内容、異議申し立てなど）は Discord の <b>@ShusakuNamiki</b> へDMをお願いします。</p>
+        </div>
+        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+      </div>
+      <div class="donation-card reveal">
+        <div>
+          <h3>寄付について</h3>
+          <p>寄付の合計が<b style="color:var(--ink)">17万円</b>に達した場合、サーバーの最大接続人数を <b style="color:var(--ink)">100〜120人</b>まで拡張予定です。ご支援いただける方はDiscordで <b style="color:var(--ink)">@ShusakuNamiki</b> にDMをお願いします。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="y"></span> VoiceMC. All rights reserved.</div>
+  </footer>
+
+  <div class="affiliate-widget">
+    <script async src="https://ar-cdn.net/widget/v1.js" data-site-id="4419c05a-5fcf-4164-873a-0ee32c42ae98" data-variant="carousel"></script>
+  </div>
+
+  <!-- イースターエッグ モーダル -->
+  <div class="egg-modal" id="egg-modal">
+    <div class="egg-box">
+      <p>？？？</p>
+      <input class="egg-input" id="egg-input" type="text" autocomplete="off" spellcheck="false" placeholder="キーワードを入力..." />
+      <div class="egg-error" id="egg-error"></div>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="eggSubmit()">開く</button>
+    </div>
+  </div>
+
+  <!-- ライトボックス -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="画像ビューワー">
+    <button class="lightbox-close" id="lightbox-close" aria-label="閉じる">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="前の画像">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    <button class="lightbox-next" id="lightbox-next" aria-label="次の画像">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
+
+  <!-- ページトップへ戻るボタン -->
+  <button class="back-to-top" id="back-to-top" aria-label="ページトップへ">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script>
+    // ── IPコピー ──
+    function copyIP(btn) {
+      const text = document.getElementById('server-ip').textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'コピーしました';
+        btn.style.background = 'var(--brand-dim)';
+        btn.style.borderColor = 'var(--brand)';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = '';
+          btn.style.borderColor = '';
+        }, 2000);
+      }).catch(() => {
+        prompt('手動でコピーしてください', text);
+      });
+    }
+
+    // ── リアルタイムサーバーステータス ──
+    async function fetchServerStatus() {
+      const card = document.getElementById('status-card');
+      try {
+        const res = await fetch('https://api.mcsrvstat.us/3/vcmc.jp');
+        const data = await res.json();
+
+        if (data.online) {
+          const playersOnline = data.players?.online ?? 0;
+          const playersMax    = data.players?.max    ?? 0;
+          const version = '26.1.2';
+          card.innerHTML = `
+            <div class="status-indicator">
+              <span class="status-dot online"></span>
+              <span>オンライン</span>
+            </div>
+            <div class="status-divider"></div>
+            <div class="status-stat">
+              <div class="status-stat-value">${playersOnline} <span style="font-size:0.8em;color:var(--muted)">/ ${playersMax}</span></div>
+              <div class="status-stat-label">接続中のプレイヤー</div>
+            </div>
+            ${version ? `<div class="status-divider"></div>
+            <div class="status-stat">
+              <div class="status-stat-value" style="font-size:1rem">${version}</div>
+              <div class="status-stat-label">バージョン</div>
+            </div>` : ''}
+          `;
+        } else {
+          card.innerHTML = `
+            <div class="status-indicator">
+              <span class="status-dot offline"></span>
+              <span style="color:var(--muted)">現在オフラインです</span>
+            </div>
+          `;
+        }
+      } catch {
+        card.innerHTML = `<span class="status-loading">ステータスを取得できませんでした</span>`;
+      }
+    }
+
+    fetchServerStatus();
+    // 60秒ごとに自動更新
+    setInterval(fetchServerStatus, 60_000);
+
+    // ── ギャラリー ──
+    // 画像を追加する場合は images/ フォルダに画像を置き、ファイル名を配列に追加してください
+    const galleryImages = [
+      'images/2026-03-21_13.42.08.png',
+      'images/2026-03-21_13.46.04.png',
+      'images/2026-03-21_13.46.25.png',
+      'images/2026-03-21_13.47.37.png',
+      'images/2026-03-21_13.49.04.png',
+      'images/2026-03-21_13.49.28.png',
+      'images/2026-03-21_13.49.29.png',
+      'images/2026-03-21_13.49.43.png',
+      'images/2026-03-21_13.49.47.png',
+      'images/2026-03-21_13.50.12.png',
+      'images/2026-03-21_13.55.42.png',
+      'images/ｓ.png',
+    ];
+
+    let lbImages = [];
+    let lbCurrent = 0;
+
+    // 動的に追加する要素用のフェードイン（main.js は初期描画時の要素のみ監視するため）
+    const galleryObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            galleryObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    (function renderGallery() {
+      const grid = document.getElementById('screenshot-grid');
+      if (!galleryImages.length) {
+        grid.innerHTML = '<p class="gallery-empty">スクリーンショットは近日公開予定です。</p>';
+        return;
+      }
+      lbImages = [...galleryImages].sort(() => Math.random() - 0.5).slice(0, 6);
+      lbImages.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `サーバースクリーンショット ${i + 1}`;
+        img.className = 'gallery-img reveal';
+        img.loading = 'lazy';
+        img.addEventListener('click', () => openLightbox(i));
+        grid.appendChild(img);
+        galleryObserver.observe(img);
+      });
+    })();
+
+    // ── ライトボックス ──
+    const lightbox  = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lightbox-img');
+    const lbCounter = document.getElementById('lightbox-counter');
+
+    function openLightbox(index) {
+      lbCurrent = index;
+      lbImg.src = lbImages[index];
+      lbImg.alt = `サーバースクリーンショット ${index + 1}`;
+      lbCounter.textContent = `${index + 1} / ${lbImages.length}`;
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    function lbNext() { openLightbox((lbCurrent + 1) % lbImages.length); }
+    function lbPrev() { openLightbox((lbCurrent - 1 + lbImages.length) % lbImages.length); }
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-next').addEventListener('click', lbNext);
+    document.getElementById('lightbox-prev').addEventListener('click', lbPrev);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape')     closeLightbox();
+      if (e.key === 'ArrowRight') lbNext();
+      if (e.key === 'ArrowLeft')  lbPrev();
+    });
+
+    // ── イースターエッグ ──
+    const XIAOMI_URLS = [
+      'https://www.bilibili.com/video/BV1acRGYAEKb/?spm_id_from=333.337.search-card.all.click&vd_source=64d1fd2fff30f436a4c41b275b1b6192',
+      'https://www.bilibili.com/video/BV1es411D7sW/?spm_id_from=333.337.search-card.all.click&vd_source=64d1fd2fff30f436a4c41b275b1b6192',
+      'https://www.bilibili.com/video/BV1Yq421w7k6/?spm_id_from=333.337.search-card.all.click&vd_source=64d1fd2fff30f436a4c41b275b1b6192',
+    ];
+    const HUAWEI_URL = 'https://www.bilibili.com/video/BV1wu4y1y7Hz?spm_id_from=333.788.player.player_end_recommend_autoplay&vd_source=64d1fd2fff30f436a4c41b275b1b6192&trackid=web_related_0.router-related-2589621-z4htq.1780197891381.356';
+    const HAJIMI_URL = 'https://www.bilibili.com/video/BV1sdaHzTEe7/?spm_id_from=333.337.search-card.all.click&vd_source=64d1fd2fff30f436a4c41b275b1b6192';
+    const NICONICO_URL = 'https://www.bilibili.com/video/BV1m53MeREq7/?spm_id_from=333.337.search-card.all.click&vd_source=64d1fd2fff30f436a4c41b275b1b6192';
+
+    // ロゴ5連打でモーダルを開く
+    let eggClickCount = 0;
+    let eggClickTimer = null;
+    document.querySelector('.brand').addEventListener('click', e => {
+      e.preventDefault();
+      eggClickCount++;
+      clearTimeout(eggClickTimer);
+      eggClickTimer = setTimeout(() => { eggClickCount = 0; }, 2000);
+      if (eggClickCount >= 5) {
+        eggClickCount = 0;
+        clearTimeout(eggClickTimer);
+        openEggModal();
+      }
+    });
+
+    function openEggModal() {
+      document.getElementById('egg-modal').classList.add('is-open');
+      document.getElementById('egg-input').value = '';
+      document.getElementById('egg-error').textContent = '';
+      setTimeout(() => document.getElementById('egg-input').focus(), 50);
+      document.body.style.overflow = 'hidden';
+    }
+    function closeEggModal() {
+      document.getElementById('egg-modal').classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    function eggSubmit() {
+      const val = document.getElementById('egg-input').value.trim().toLowerCase();
+      if (val === 'xiaomi') {
+        closeEggModal();
+        window.open(XIAOMI_URLS[Math.floor(Math.random() * XIAOMI_URLS.length)], '_blank', 'noopener,noreferrer');
+      } else if (val === 'huawei') {
+        closeEggModal();
+        window.open(HUAWEI_URL, '_blank', 'noopener,noreferrer');
+      } else if (val === 'hajimi') {
+        closeEggModal();
+        window.open(HAJIMI_URL, '_blank', 'noopener,noreferrer');
+      } else if (val === '810' || val === '114514') {
+        closeEggModal();
+        window.open(NICONICO_URL, '_blank', 'noopener,noreferrer');
+      } else {
+        document.getElementById('egg-error').textContent = '違います';
+      }
+    }
+    document.getElementById('egg-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') eggSubmit();
+      if (e.key === 'Escape') closeEggModal();
+    });
+    document.getElementById('egg-modal').addEventListener('click', e => {
+      if (e.target === document.getElementById('egg-modal')) closeEggModal();
+    });
+  </script>
+
+</body>
+</html>

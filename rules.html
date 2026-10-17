@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ルール＆ガイドライン | VoiceMC</title>
+  <meta name="description" content="VoiceMCサーバーのルールとプレイガイドライン。快適なサーバー環境のために守るべきマナーを確認できます。" />
+  <meta property="og:title" content="ルール＆ガイドライン | VoiceMC" />
+  <meta property="og:description" content="VoiceMCサーバーのルールとプレイガイドライン。快適なサーバー環境のために守るべきマナーを確認できます。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vcmc.jp/rules.html" />
+  <meta property="og:site_name" content="VoiceMC" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#fff" />
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || auto);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img class="logo" src="images/icon.png" alt="VoiceMC logo">
+        <span>VoiceMC</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html#how-to">参加方法</a></li>
+          <li><a href="index.html#features">About</a></li>
+          <li><a href="rules.html" class="current">ルール</a></li>
+          <li><a href="commands.html">コマンド</a></li>
+          <li><a href="vote.html">投票</a></li>
+          <li><a href="https://status.vcmc.jp/status/vcmc" target="_blank" rel="noopener">Status</a></li>
+          <li class="nav-mobile-discord" style="display:none">
+            <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="テーマを切り替え">
+          <svg class="icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container page-hero">
+      <p class="section-label reveal">サーバールール</p>
+      <h1 class="reveal">ルール＆ガイドライン</h1>
+      <p class="reveal">快適なサーバー環境のため、以下のルールをお守りください。</p>
+    </div>
+
+    <section class="container">
+      <div class="rules-grid">
+
+        <div class="rule-card rule-card--ban reveal">
+          <div class="rule-card-header">
+            <span class="rule-badge rule-badge--ban"><i class="fa-solid fa-ban" aria-hidden="true"></i></span>
+            <h3>禁止事項</h3>
+          </div>
+          <p class="rule-desc">違反が確認された場合、警告またはサーバーからの退出・BANの対象となります。</p>
+
+          <div class="rule-group">
+            <div class="rule-group-label">配信関連</div>
+            <ul class="rule-list">
+              <li>配信者ロール以外の方が、自分の配信URLを貼る行為</li>
+            </ul>
+          </div>
+
+          <div class="rule-group">
+            <div class="rule-group-label">プレイ・チャット関連</div>
+            <ul class="rule-list">
+              <li>Simple Voice Chatを導入せずメインワールドに参加する行為</li>
+              <li>外部VC（Discordなど）での会話（VoiceMC公式Discordでのボイスチャットは可）</li>
+              <li>合意のないPvP行為</li>
+              <li>荒らし・迷惑行為</li>
+              <li>チート・不正行為</li>
+              <li>卑猥または公序良俗に反する建築・発言</li>
+              <li>特定の思想・宗教・政治的主張を含む建築・発言</li>
+              <li>運営の指示に従わない行為</li>
+              <li>他プレイヤーの許可なしに建築物を破壊する行為</li>
+              <li>バグ・不具合・エクスプロイトの悪用</li>
+              <li>PvP補助・自動化マクロなどの不正MODやスクリプトの使用</li>
+              <li>他プレイヤーへの誹謗中傷・煽り行為</li>
+              <li>スパム・無断宣伝行為</li>
+              <li>個人情報の共有・晒し行為</li>
+              <li class="rule-joke">ピザにパイナップルを乗せる行為</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="rule-card rule-card--guide reveal reveal-delay-1">
+          <div class="rule-card-header">
+            <span class="rule-badge rule-badge--guide"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i></span>
+            <h3>プレイガイド（推奨）</h3>
+          </div>
+          <p class="rule-desc">強制ではありませんが、みんなが気持ちよく遊べる環境づくりにご協力ください。</p>
+
+          <div class="rule-group">
+            <div class="rule-group-label">コミュニケーション</div>
+            <ul class="rule-list">
+              <li>丁寧な言葉遣いと節度ある態度を心がけましょう</li>
+              <li>初対面のプレイヤーには軽い挨拶を。友好的な雰囲気づくりを意識してください</li>
+              <li>不快な発言を見かけても過度に反応せず、運営へ報告を</li>
+            </ul>
+          </div>
+
+          <div class="rule-group">
+            <div class="rule-group-label">プレイマナー</div>
+            <ul class="rule-list">
+              <li>他プレイヤーの建築物を壊さず・荒らさず・尊重しましょう</li>
+              <li>共用施設やチェストは譲り合って利用してください</li>
+              <li>AFKする場合は安全な場所に移動しておくと◎</li>
+              <li>Mobの過密飼育・大型装置など、サーバー負荷をかける行為は控えめに</li>
+            </ul>
+          </div>
+
+          <div class="rule-group">
+            <div class="rule-group-label">配信関連</div>
+            <ul class="rule-list">
+              <li>配信中は他プレイヤーへの配慮を忘れずに</li>
+              <li>配信・撮影を行う場合は <b>/stream on</b> や <b>/rec on</b> で周囲に表示し、終了後は <b>/stream off</b> <b>/rec off</b> で解除しましょう</li>
+              <li>視聴者にもルールを簡単に伝えてもらえると助かります</li>
+              <li>配信タイトルにサーバー名を入れてもOKです！</li>
+            </ul>
+          </div>
+
+          <div class="rule-group">
+            <div class="rule-group-label">運営への協力</div>
+            <ul class="rule-list">
+              <li>不具合やバグを発見した場合は、詳細を添えて運営へ報告してください</li>
+              <li>ルールや仕様に関する質問は、気軽にスタッフまで</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="y"></span> VoiceMC. All rights reserved.</div>
+  </footer>
+
+  <div class="affiliate-widget">
+    <script async src="https://ar-cdn.net/widget/v1.js" data-site-id="4419c05a-5fcf-4164-873a-0ee32c42ae98" data-variant="carousel"></script>
+  </div>
+
+  <button class="back-to-top" id="back-to-top" aria-label="トップへ戻る">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+</body>
+</html>
