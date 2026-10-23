@@ -1,6 +1,6 @@
 # VoiceMC Official Website (`vcmc.jp`)
 
-Simple Voice Chat 対応の Minecraft サーバー **VoiceMC**（[https://vcmc.jp/](https://vcmc.jp/)）の公式ホームページリポジトリです。
+Simple Voice Chat 対応の Minecraft サーバー **VoiceMC**（[https://www.vcmc.jp/](https://www.vcmc.jp/)）の公式ホームページリポジトリです。
 
 ## 構成 (Structure)
 
