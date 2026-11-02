@@ -12,165 +12,368 @@
   <meta property="og:site_name" content="VoiceMC" />
   <meta property="og:locale" content="ja_JP" />
   <meta name="twitter:card" content="summary" />
-  <meta name="theme-color" content="#fff" />
-  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="theme-color" content="#06080d" />
+  <link rel="icon" type="image/png" href="images/opt/favicon-192.png" />
+  <link rel="apple-touch-icon" href="images/opt/apple-touch-icon.png" />
   <script>
-    (function() {
-      const saved = localStorage.getItem('theme');
-      const auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', saved || auto);
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (e) {}
+      var auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-theme', saved || auto);
+      // main.js が読み込めなかった場合でもコンテンツが表示されるようにする
+      window.addEventListener('load', function () { if (!window.__vcmcReady) d.classList.remove('js'); });
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css" />
   <script src="main.js" defer></script>
 </head>
-<body>
-  <header>
+<body class="has-hero">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="#top">
-        <img class="logo" src="images/icon.png" alt="VoiceMC logo">
-        <span>VoiceMC</span>
+      <a class="brand" href="#top" aria-label="VoiceMC トップ">
+        <img class="brand-mark" src="images/opt/logo-mark.png" alt="" width="18" height="32">
+        <span class="brand-name">VoiceMC</span>
       </a>
-      <nav>
+      <nav class="nav-menu" aria-label="メインメニュー">
         <ul class="nav-links" id="nav-links">
-          <li><a href="index.html#how-to">参加方法</a></li>
-          <li><a href="index.html#features">About</a></li>
+          <li><a href="#how-to">参加方法</a></li>
+          <li><a href="#features">About</a></li>
           <li><a href="rules.html">ルール</a></li>
           <li><a href="commands.html">コマンド</a></li>
           <li><a href="vote.html">投票</a></li>
-          <li class="nav-mobile-discord" style="display:none">
-            <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+          <li class="nav-mobile-cta">
+            <a class="btn btn--primary btn--block" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
           </li>
         </ul>
       </nav>
-      <div class="nav-right">
-        <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="テーマを切り替え">
+          <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <a class="btn btn--primary btn--sm nav-cta" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
+        <button class="icon-btn hamburger" id="hamburger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav-links">
           <span></span><span></span><span></span>
         </button>
-        <button class="theme-toggle" id="theme-toggle" aria-label="テーマを切り替え">
-          <svg class="icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
-        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
       </div>
     </div>
   </header>
 
-  <main id="top">
-    <section class="hero container">
-      <div class="hero-badges reveal">
-        <span class="tag">Simple Voice Chat 対応サーバー</span>
-        <span class="badge-java">Java版専用</span>
+  <main id="main">
+    <!-- ヒーロー -->
+    <section class="hero on-dark" id="top">
+      <div class="hero-media" aria-hidden="true">
+        <img src="images/opt/2026-03-21_13.46.04-1920.webp" srcset="images/opt/2026-03-21_13.46.04-960.webp 960w, images/opt/2026-03-21_13.46.04-1920.webp 1920w" sizes="100vw" alt="" width="1920" height="1009" fetchpriority="high" decoding="async">
       </div>
-      <h1 class="reveal reveal-delay-1">声でつながる、<br>Minecraftの世界。</h1>
-      <p class="reveal reveal-delay-2">配信者も、リスナーも、純粋なサバイバル勢も。<br>近接ボイスチャットで一緒に遊べる、誰でも歓迎のサーバーです。</p>
 
-      <div class="ip-row reveal reveal-delay-3">
-        <span class="ip-code" id="server-ip">vcmc.jp</span>
-        <button class="btn-ghost" onclick="copyIP(this)">IPをコピー</button>
-        <a class="btn-ghost" href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMap ↗</a>
-        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+      <div class="container">
+        <div class="hero-content reveal-stagger">
+          <div class="hero-chips">
+            <span class="chip chip--accent"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Simple Voice Chat 対応</span>
+            <span class="chip">Java版専用</span>
+          </div>
+
+          <h1 class="hero-title"><em>声</em>でつながる、<br>Minecraftの世界。</h1>
+          <p class="hero-lead">配信者も、リスナーも、純粋なサバイバル勢も。<br>近接ボイスチャットで一緒に遊べる、誰でも歓迎のサーバーです。</p>
+
+          <!-- サーバーリスト風ステータス（下のスクリプトで更新） -->
+          <div class="server-card" id="status-card" data-state="loading">
+            <div class="server-icon" aria-hidden="true">
+              <img src="images/opt/favicon-192.png" alt="" width="54" height="54">
+            </div>
+            <div class="server-body">
+              <div class="server-top">
+                <span class="server-name">VoiceMC</span>
+                <span class="server-meta">
+                  <span class="server-players" id="server-players" title="接続中のプレイヤー"></span>
+                  <span class="ping" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                </span>
+              </div>
+              <p class="server-status" id="server-status">ステータスを取得中...</p>
+              <div class="server-ip-row">
+                <div>
+                  <span class="server-ip-label">SERVER ADDRESS</span>
+                  <code class="server-ip" id="server-ip">vcmc.jp</code>
+                </div>
+                <button class="btn btn--ghost btn--sm" type="button" data-copy="vcmc.jp"><i class="fa-solid fa-copy" aria-hidden="true"></i><span data-copy-label>IPをコピー</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn--primary btn--lg" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
+            <a class="btn btn--ghost btn--lg" href="https://map.vcmc.jp/" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>WebMap<i class="fa-solid fa-arrow-up-right-from-square ext" aria-hidden="true"></i></a>
+          </div>
+          <p class="hero-note">※ サーバーへの参加にはDiscordへの加入を推奨しています</p>
+        </div>
       </div>
-      <span class="notice reveal">※ サーバーへの参加にはDiscordへの加入を推奨しています</span>
 
-      <div class="reveal">
-        <div class="status-card" id="status-card">
-          <span class="status-loading">ステータスを取得中...</span>
+      <div class="hero-bottom" aria-hidden="true">
+        <div class="container">
+          <span class="hero-scroll">SCROLL</span>
+          <span class="hero-eq">
+            <span class="hero-eq-label">PROXIMITY VOICE</span>
+            <span class="hero-eq-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          </span>
         </div>
       </div>
     </section>
 
-    <section class="container" id="how-to">
-      <div class="section-label reveal">参加までの流れ</div>
-      <div class="section-title reveal">3ステップで始める</div>
-      <div class="steps">
-        <div class="step reveal">
-          <span class="step-num">Step 01</span>
-          <h3><i class="fa-brands fa-discord" aria-hidden="true"></i> Discordに参加する</h3>
-          <p>まず公式Discordサーバーへの参加を推奨しています。参加前に<a href="rules.html"><b>ルール・禁止事項</b></a>を必ずご確認ください。</p>
+    <!-- 参加方法 -->
+    <section class="section bg-grid" id="how-to">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">01</span>How to join</p>
+            <h2 class="section-title">3ステップで始める</h2>
+          </div>
         </div>
-        <div class="step reveal reveal-delay-1">
-          <span class="step-num">Step 02</span>
-          <h3><i class="fa-solid fa-download" aria-hidden="true"></i> Modを導入して接続</h3>
-          <p><b>Simple Voice Chat</b>（Mod）を導入してサーバーに接続。ゲーム内でマイクの設定をすれば準備完了です。</p>
-          <a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" rel="noopener" class="step-link chevron-link">Modrinthでダウンロード ↗</a>
+
+        <ol class="steps reveal-stagger">
+          <li class="step">
+            <div class="step-head">
+              <span class="step-num"><small>STEP</small>01</span>
+              <span class="step-icon"><i class="fa-brands fa-discord" aria-hidden="true"></i></span>
+            </div>
+            <h3 class="step-title">Discordに参加する</h3>
+            <p class="step-text">まず公式Discordサーバーへの参加を推奨しています。参加前に<a href="rules.html">ルール・禁止事項</a>を必ずご確認ください。</p>
+            <div class="step-actions">
+              <a class="btn btn--primary btn--sm" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-head">
+              <span class="step-num"><small>STEP</small>02</span>
+              <span class="step-icon"><i class="fa-solid fa-download" aria-hidden="true"></i></span>
+            </div>
+            <h3 class="step-title">Modを導入して接続</h3>
+            <p class="step-text"><b>Simple Voice Chat</b>（Mod）を導入してサーバーに接続。ゲーム内でマイクの設定をすれば準備完了です。</p>
+            <div class="step-actions">
+              <a class="btn btn--ghost btn--sm" href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" rel="noopener">Modrinthでダウンロード<i class="fa-solid fa-arrow-up-right-from-square ext" aria-hidden="true"></i></a>
+              <button class="ip-chip" type="button" data-copy="vcmc.jp" aria-label="サーバーアドレス vcmc.jp をコピー"><span class="ip-chip-label">IP</span>vcmc.jp<i class="fa-solid fa-copy" aria-hidden="true"></i></button>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-head">
+              <span class="step-num"><small>STEP</small>03</span>
+              <span class="step-icon"><i class="fa-solid fa-gamepad" aria-hidden="true"></i></span>
+            </div>
+            <h3 class="step-title">自由に遊ぶ</h3>
+            <p class="step-text">サバイバルを楽しむもよし、配信企画に使うもよし。ルールを守って自由に楽しみましょう。</p>
+            <div class="step-actions">
+              <a class="btn btn--ghost btn--sm" href="commands.html">コマンドを見る<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- サーバーの特徴 -->
+    <section class="section section--alt" id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">02</span>Features</p>
+            <h2 class="section-title">サーバーの特徴</h2>
+          </div>
         </div>
-        <div class="step reveal reveal-delay-2">
-          <span class="step-num">Step 03</span>
-          <h3><i class="fa-solid fa-gamepad" aria-hidden="true"></i> 自由に遊ぶ</h3>
-          <p>サバイバルを楽しむもよし、配信企画に使うもよし。ルールを守って自由に楽しみましょう。</p>
+
+        <div class="bento reveal-stagger">
+          <article class="tile tile--voice">
+            <div class="tile-head">
+              <span class="tile-icon"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i></span>
+              <div>
+                <h3 class="tile-title">近接ボイスチャット</h3>
+                <p class="tile-text">Simple Voice Chatによる、その場にいるような臨場感のある通話</p>
+              </div>
+            </div>
+            <div class="prox">
+              <svg class="prox-svg" viewBox="0 0 560 320" role="img" aria-label="近接ボイスチャットのイメージ図。近くのプレイヤーの声ははっきり、遠いと小さく聞こえ、範囲外では聞こえない。">
+                <defs>
+                  <pattern id="prox-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path class="prox-grid" d="M20 0H0V20"/>
+                  </pattern>
+                </defs>
+                <rect width="560" height="320" fill="url(#prox-grid)"/>
+                <circle class="prox-area" cx="280" cy="160" r="150"/>
+                <circle class="prox-ring" cx="280" cy="160" r="70"/>
+                <circle class="prox-ring" cx="280" cy="160" r="112"/>
+                <circle class="prox-ring prox-ring--edge" cx="280" cy="160" r="150"/>
+                <g class="prox-pulses">
+                  <circle class="prox-pulse" cx="280" cy="160" r="150"/>
+                  <circle class="prox-pulse" cx="280" cy="160" r="150"/>
+                  <circle class="prox-pulse" cx="280" cy="160" r="150"/>
+                </g>
+                <g class="prox-near" transform="translate(310 112)">
+                  <rect class="prox-head" width="28" height="28"/>
+                  <rect class="prox-eye" x="6" y="11" width="5" height="5"/>
+                  <rect class="prox-eye" x="17" y="11" width="5" height="5"/>
+                  <path class="prox-wave" d="M36 8q6 6 0 12"/>
+                  <path class="prox-wave" d="M42 3q10 11 0 22"/>
+                  <path class="prox-wave" d="M48 -2q14 16 0 32"/>
+                </g>
+                <g class="prox-mid" transform="translate(150 218)">
+                  <rect class="prox-head" width="28" height="28"/>
+                  <rect class="prox-eye" x="6" y="11" width="5" height="5"/>
+                  <rect class="prox-eye" x="17" y="11" width="5" height="5"/>
+                  <path class="prox-wave" d="M36 8q6 6 0 12"/>
+                </g>
+                <g class="prox-far" transform="translate(478 40)">
+                  <rect class="prox-head" width="28" height="28"/>
+                  <rect class="prox-eye" x="6" y="11" width="5" height="5"/>
+                  <rect class="prox-eye" x="17" y="11" width="5" height="5"/>
+                  <path class="prox-x" d="M36 9l9 9M45 9l-9 9"/>
+                </g>
+                <g class="prox-you" transform="translate(258 138)">
+                  <rect class="prox-box" width="44" height="44"/>
+                  <path class="prox-mic" d="M17 8h10v17H17zM13 19h3v8h12v-8h3v11H13zM20.5 30h3v4h-3zM15 34h14v3H15z"/>
+                </g>
+              </svg>
+              <ul class="prox-legend">
+                <li class="near"><i aria-hidden="true"></i>近い：はっきり聞こえる</li>
+                <li class="mid"><i aria-hidden="true"></i>遠い：小さく聞こえる</li>
+                <li class="far"><i aria-hidden="true"></i>範囲外：聞こえない</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="tile tile--stream">
+            <div class="stream-preview on-dark" aria-hidden="true">
+              <img src="images/opt/2026-03-21_13.49.43-960.webp" alt="" width="960" height="505" loading="lazy" decoding="async">
+              <span class="onair"><i></i>ON AIR</span>
+              <span class="onair onair--rec"><i></i>REC</span>
+              <span class="stream-bar"><i></i></span>
+            </div>
+            <h3 class="tile-title">配信・動画投稿OK</h3>
+            <p class="tile-text">配信者向けの配慮も充実しており、安心してコンテンツ制作に使えます</p>
+            <div class="tile-cmds">
+              <code class="kbd">/stream on</code>
+              <code class="kbd">/rec on</code>
+            </div>
+          </article>
+
+          <article class="tile tile--map on-dark">
+            <img class="tile-bg" src="images/opt/2026-03-21_13.46.25-960.webp" srcset="images/opt/2026-03-21_13.46.25-960.webp 960w, images/opt/2026-03-21_13.46.25-1920.webp 1920w" sizes="(min-width: 1280px) 1200px, 100vw" alt="" loading="lazy" decoding="async">
+            <span class="map-pin" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+            <div class="tile-map-content">
+              <span class="tile-icon"><i class="fa-solid fa-map" aria-hidden="true"></i></span>
+              <h3 class="tile-title">ワールドマップ</h3>
+              <p class="tile-text">Bluemapによるリアルタイム3Dマップを公開中。ブラウザからいつでもワールドを確認できます</p>
+              <a class="btn btn--primary" href="https://map.vcmc.jp/" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>WebMapを開く<i class="fa-solid fa-arrow-up-right-from-square ext" aria-hidden="true"></i></a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="container" id="features">
-      <div class="feature-card reveal">
-        <h2>サーバーの特徴</h2>
-        <ul class="feature-list">
-          <li class="feature-card">
-            <span class="feature-icon"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i></span>
-            <div><b>近接ボイスチャット</b>Simple Voice Chatによる、その場にいるような臨場感のある通話</div>
-          </li>
-          <li class="feature-card">
-            <span class="feature-icon"><i class="fa-solid fa-video" aria-hidden="true"></i></span>
-            <div><b>配信・動画投稿OK</b>配信者向けの配慮も充実しており、安心してコンテンツ制作に使えます</div>
-          </li>
-          <li class="feature-card">
-            <span class="feature-icon"><i class="fa-brands fa-discord" aria-hidden="true"></i></span>
-            <div><b>Discord連携</b>ゲーム内チャットとDiscordが連携。コミュニティとのつながりを大切にしています</div>
-          </li>
-          <li class="feature-card">
-            <span class="feature-icon"><i class="fa-solid fa-map" aria-hidden="true"></i></span>
-            <div><b><a href="https://map.vcmc.jp/" target="_blank" rel="noopener" style="color:inherit">ワールドマップ</a></b>Bluemapによるリアルタイム3Dマップを公開中。ブラウザからいつでもワールドを確認できます</div>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="container" id="gallery">
-      <div class="section-label reveal">ギャラリー</div>
-      <div class="section-title reveal">サーバーの様子</div>
-      <div class="gallery-grid reveal" id="screenshot-grid"></div>
-    </section>
-
-    <section class="container" id="support">
-      <div class="cta-strip reveal">
-        <div>
-          <h3>お問い合わせ・サポート</h3>
-          <p><b>一般的なサポート</b>は公式Discordのスレッドへどうぞ。</p>
-          <p><b>個人的なサポート</b>（座標や個人情報を含む内容、異議申し立てなど）は Discord の <b>@ShusakuNamiki</b> へDMをお願いします。</p>
+    <!-- ギャラリー -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">03</span>Gallery</p>
+            <h2 class="section-title">サーバーの様子</h2>
+          </div>
+          <a class="section-link" href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMapでワールドを見る<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
         </div>
-        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+        <div class="gallery reveal-stagger" id="screenshot-grid"></div>
       </div>
-      <div class="donation-card reveal">
-        <div>
-          <h3>寄付について</h3>
-          <p>ご支援いただける方はDiscordで <b style="color:var(--ink)">@ShusakuNamiki</b> にDMをお願いします。</p>
+    </section>
+
+    <!-- サポート -->
+    <section class="section section--alt" id="support">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">04</span>Support</p>
+            <h2 class="section-title">お問い合わせ・サポート</h2>
+          </div>
+        </div>
+
+        <div class="support-grid reveal-stagger">
+          <article class="panel">
+            <span class="tile-icon"><i class="fa-solid fa-headset" aria-hidden="true"></i></span>
+            <h3 class="panel-title">お問い合わせ</h3>
+            <dl class="support-list">
+              <div>
+                <dt>一般的なサポート</dt>
+                <dd>公式Discordのスレッドへどうぞ。</dd>
+              </div>
+              <div>
+                <dt>個人的なサポート</dt>
+                <dd>座標や個人情報を含む内容、異議申し立てなどは、Discord の <span class="handle">@ShusakuNamiki</span> へDMをお願いします。</dd>
+              </div>
+            </dl>
+            <a class="btn btn--primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
+          </article>
+
+          <article class="panel panel--donate">
+            <span class="tile-icon"><i class="fa-solid fa-heart" aria-hidden="true"></i></span>
+            <h3 class="panel-title">寄付について</h3>
+            <p>ご支援いただける方はDiscordで <span class="handle">@ShusakuNamiki</span> にDMをお願いします。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 参加CTA -->
+    <section class="cta-band on-dark">
+      <img class="cta-bg" src="images/opt/2026-03-21_13.47.37-960.webp" srcset="images/opt/2026-03-21_13.47.37-960.webp 960w, images/opt/2026-03-21_13.47.37-1920.webp 1920w" sizes="100vw" alt="" loading="lazy" decoding="async">
+      <div class="container reveal">
+        <p class="eyebrow">Join us</p>
+        <h2 class="cta-title">あなたの声を、<br>待ってます。</h2>
+        <p class="cta-text">Java版 / Simple Voice Chat 対応。配信者もリスナーも、誰でも参加OKです。</p>
+        <div class="cta-actions">
+          <button class="ip-chip ip-chip--lg" type="button" data-copy="vcmc.jp" aria-label="サーバーアドレス vcmc.jp をコピー"><span class="ip-chip-label">IP</span>vcmc.jp<i class="fa-solid fa-copy" aria-hidden="true"></i></button>
+          <a class="btn btn--primary btn--lg" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container footer-bar">
-      <div class="footer-copy">© <span id="y"></span> VoiceMC. All rights reserved.</div>
-      <div class="footer-nav">
-        <a href="rules.html">ルール</a>
-        <a href="commands.html">コマンド</a>
-        <a href="vote.html">投票</a>
-        <a href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMap</a>
-        <a href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discord</a>
+  <footer class="site-footer on-dark">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#top"><img src="images/opt/logo-mark.png" alt="" width="20" height="36">VoiceMC</a>
+          <p class="footer-tagline">声でつながる、Minecraftの世界。<br>Simple Voice Chat 対応 / Java版専用サーバー</p>
+          <button class="ip-chip" type="button" data-copy="vcmc.jp" aria-label="サーバーアドレス vcmc.jp をコピー"><span class="ip-chip-label">IP</span>vcmc.jp<i class="fa-solid fa-copy" aria-hidden="true"></i></button>
+        </div>
+        <nav class="footer-col" aria-label="サイト内リンク">
+          <p class="footer-title">Pages</p>
+          <ul>
+            <li><a href="index.html">トップ</a></li>
+            <li><a href="rules.html">ルール</a></li>
+            <li><a href="commands.html">コマンド</a></li>
+            <li><a href="vote.html">投票</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="外部リンク">
+          <p class="footer-title">Links</p>
+          <ul>
+            <li><a href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discord<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+            <li><a href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMap<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+            <li><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" rel="noopener">Simple Voice Chat<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="affiliate-widget">
+        <script async src="https://ar-cdn.net/widget/v1.js" data-site-id="4419c05a-5fcf-4164-873a-0ee32c42ae98" data-variant="carousel"></script>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="y"></span> VoiceMC. All rights reserved.</p>
       </div>
     </div>
   </footer>
-
-  <div class="affiliate-widget">
-    <script async src="https://ar-cdn.net/widget/v1.js" data-site-id="4419c05a-5fcf-4164-873a-0ee32c42ae98" data-variant="carousel"></script>
-  </div>
 
   <!-- イースターエッグ モーダル -->
   <div class="egg-modal" id="egg-modal">
@@ -178,86 +381,58 @@
       <p>？？？</p>
       <input class="egg-input" id="egg-input" type="text" autocomplete="off" spellcheck="false" placeholder="キーワードを入力..." />
       <div class="egg-error" id="egg-error"></div>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="eggSubmit()">開く</button>
+      <button class="btn btn--primary btn--block" type="button" onclick="eggSubmit()">開く</button>
     </div>
   </div>
 
   <!-- ライトボックス -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="画像ビューワー">
-    <button class="lightbox-close" id="lightbox-close" aria-label="閉じる">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="閉じる">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <button class="lightbox-prev" id="lightbox-prev" aria-label="前の画像">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <button class="lightbox-prev" id="lightbox-prev" type="button" aria-label="前の画像">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
-    <button class="lightbox-next" id="lightbox-next" aria-label="次の画像">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+    <img class="lightbox-img" id="lightbox-img" src="data:," alt="" />
+    <button class="lightbox-next" id="lightbox-next" type="button" aria-label="次の画像">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
     <div class="lightbox-counter" id="lightbox-counter"></div>
   </div>
 
   <!-- ページトップへ戻るボタン -->
-  <button class="back-to-top" id="back-to-top" aria-label="ページトップへ">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="ページトップへ">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
   <script>
-    // ── IPコピー ──
-    function copyIP(btn) {
-      const text = document.getElementById('server-ip').textContent.trim();
-      navigator.clipboard.writeText(text).then(() => {
-        const orig = btn.textContent;
-        btn.textContent = 'コピーしました';
-        btn.style.background = 'var(--brand-dim)';
-        btn.style.borderColor = 'var(--brand)';
-        setTimeout(() => {
-          btn.textContent = orig;
-          btn.style.background = '';
-          btn.style.borderColor = '';
-        }, 2000);
-      }).catch(() => {
-        prompt('手動でコピーしてください', text);
-      });
-    }
+    // ── リアルタイムサーバーステータス（mcsrvstat.us） ──
+    const SERVER_VERSION = '26.3'; // 表示するバージョン（サーバー更新時に書き換えてください）
+    const statusCard = document.getElementById('status-card');
+    const statusPlayers = document.getElementById('server-players');
+    const statusText = document.getElementById('server-status');
 
-    // ── リアルタイムサーバーステータス ──
     async function fetchServerStatus() {
-      const card = document.getElementById('status-card');
       try {
         const res = await fetch('https://api.mcsrvstat.us/3/vcmc.jp');
         const data = await res.json();
 
         if (data.online) {
-          const playersOnline = data.players?.online ?? 0;
-          const playersMax    = data.players?.max    ?? 0;
-          const version = '26.3';
-          card.innerHTML = `
-            <div class="status-indicator">
-              <span class="status-dot online"></span>
-              <span>オンライン</span>
-            </div>
-            <div class="status-divider"></div>
-            <div class="status-stat">
-              <div class="status-stat-value">${playersOnline} <span style="font-size:0.8em;color:var(--muted)">/ ${playersMax}</span></div>
-              <div class="status-stat-label">接続中のプレイヤー</div>
-            </div>
-            ${version ? `<div class="status-divider"></div>
-            <div class="status-stat">
-              <div class="status-stat-value" style="font-size:1rem">${version}</div>
-              <div class="status-stat-label">バージョン</div>
-            </div>` : ''}
-          `;
+          const online = Number(data.players?.online ?? 0);
+          const max = Number(data.players?.max ?? 0);
+          statusCard.dataset.state = 'online';
+          statusPlayers.textContent = `${online}/${max}`;
+          statusPlayers.setAttribute('aria-label', `接続中のプレイヤー ${online} / ${max}`);
+          statusText.innerHTML = `<span class="ok">● オンライン</span>　バージョン ${SERVER_VERSION}`;
         } else {
-          card.innerHTML = `
-            <div class="status-indicator">
-              <span class="status-dot offline"></span>
-              <span style="color:var(--muted)">現在オフラインです</span>
-            </div>
-          `;
+          statusCard.dataset.state = 'offline';
+          statusPlayers.textContent = '';
+          statusText.innerHTML = '<span class="ng">● 現在オフラインです</span>';
         }
       } catch {
-        card.innerHTML = `<span class="status-loading">ステータスを取得できませんでした</span>`;
+        statusCard.dataset.state = 'error';
+        statusPlayers.textContent = '';
+        statusText.textContent = 'ステータスを取得できませんでした';
       }
     }
 
@@ -266,37 +441,32 @@
     setInterval(fetchServerStatus, 60_000);
 
     // ── ギャラリー ──
-    // 画像を追加する場合は images/ フォルダに画像を置き、ファイル名を配列に追加してください
+    // ・軽量版（images/opt/名前-960.webp と 名前-1920.webp）がある画像は「名前」だけを書きます
+    // ・新しく画像を追加するときは images/ に置いて 'images/ファイル名.png' のようにパスを書けば表示されます
     const galleryImages = [
-      'images/2026-03-21_13.42.08.png',
-      'images/2026-03-21_13.46.04.png',
-      'images/2026-03-21_13.46.25.png',
-      'images/2026-03-21_13.47.37.png',
-      'images/2026-03-21_13.49.04.png',
-      'images/2026-03-21_13.49.28.png',
-      'images/2026-03-21_13.49.29.png',
-      'images/2026-03-21_13.49.43.png',
-      'images/2026-03-21_13.49.47.png',
-      'images/2026-03-21_13.50.12.png',
-      'images/2026-03-21_13.55.42.png',
-      'images/ｓ.png',
+      '2026-03-21_13.42.08',
+      '2026-03-21_13.46.04',
+      '2026-03-21_13.46.25',
+      '2026-03-21_13.47.37',
+      '2026-03-21_13.49.04',
+      '2026-03-21_13.49.28',
+      '2026-03-21_13.49.29',
+      '2026-03-21_13.49.43',
+      '2026-03-21_13.49.47',
+      '2026-03-21_13.50.12',
+      '2026-03-21_13.55.42',
+      's',
     ];
+
+    function gallerySrc(item) {
+      if (/\.(png|jpe?g|webp|gif|avif)$/i.test(item)) return { thumb: item, full: item, srcset: '' };
+      const base = `images/opt/${item}`;
+      return { thumb: `${base}-960.webp`, full: `${base}-1920.webp`, srcset: `${base}-960.webp 960w, ${base}-1920.webp 1920w` };
+    }
 
     let lbImages = [];
     let lbCurrent = 0;
-
-    // 動的に追加する要素用のフェードイン（main.js は初期描画時の要素のみ監視するため）
-    const galleryObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            galleryObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
+    let lbLastFocus = null;
 
     (function renderGallery() {
       const grid = document.getElementById('screenshot-grid');
@@ -304,16 +474,27 @@
         grid.innerHTML = '<p class="gallery-empty">スクリーンショットは近日公開予定です。</p>';
         return;
       }
-      lbImages = [...galleryImages].sort(() => Math.random() - 0.5).slice(0, 6);
-      lbImages.forEach((src, i) => {
+      const picked = [...galleryImages].sort(() => Math.random() - 0.5).slice(0, 6).map(gallerySrc);
+      lbImages = picked.map(p => p.full);
+      picked.forEach((p, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'gallery-item';
+        btn.setAttribute('aria-label', `スクリーンショット ${i + 1} を拡大表示`);
         const img = document.createElement('img');
-        img.src = src;
-        img.alt = `サーバースクリーンショット ${i + 1}`;
-        img.className = 'gallery-img reveal';
+        if (p.srcset) {
+          img.srcset = p.srcset;
+          img.sizes = i === 0
+            ? '(min-width: 1280px) 800px, (min-width: 601px) 66vw, 100vw'
+            : '(min-width: 1280px) 400px, (min-width: 601px) 33vw, 50vw';
+        }
+        img.src = p.thumb;
+        img.alt = '';
         img.loading = 'lazy';
-        img.addEventListener('click', () => openLightbox(i));
-        grid.appendChild(img);
-        galleryObserver.observe(img);
+        img.decoding = 'async';
+        btn.appendChild(img);
+        btn.addEventListener('click', () => openLightbox(i));
+        grid.appendChild(btn);
       });
     })();
 
@@ -321,23 +502,30 @@
     const lightbox  = document.getElementById('lightbox');
     const lbImg     = document.getElementById('lightbox-img');
     const lbCounter = document.getElementById('lightbox-counter');
+    const lbClose   = document.getElementById('lightbox-close');
 
-    function openLightbox(index) {
+    function showLightboxImage(index) {
       lbCurrent = index;
       lbImg.src = lbImages[index];
       lbImg.alt = `サーバースクリーンショット ${index + 1}`;
       lbCounter.textContent = `${index + 1} / ${lbImages.length}`;
+    }
+    function openLightbox(index) {
+      lbLastFocus = document.activeElement;
+      showLightboxImage(index);
       lightbox.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      lbClose.focus();
     }
     function closeLightbox() {
       lightbox.classList.remove('is-open');
       document.body.style.overflow = '';
+      if (lbLastFocus) lbLastFocus.focus();
     }
-    function lbNext() { openLightbox((lbCurrent + 1) % lbImages.length); }
-    function lbPrev() { openLightbox((lbCurrent - 1 + lbImages.length) % lbImages.length); }
+    function lbNext() { showLightboxImage((lbCurrent + 1) % lbImages.length); }
+    function lbPrev() { showLightboxImage((lbCurrent - 1 + lbImages.length) % lbImages.length); }
 
-    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    lbClose.addEventListener('click', closeLightbox);
     document.getElementById('lightbox-next').addEventListener('click', lbNext);
     document.getElementById('lightbox-prev').addEventListener('click', lbPrev);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
@@ -410,6 +598,5 @@
       if (e.target === document.getElementById('egg-modal')) closeEggModal();
     });
   </script>
-
 </body>
 </html>

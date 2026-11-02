@@ -12,199 +12,270 @@
   <meta property="og:site_name" content="VoiceMC" />
   <meta property="og:locale" content="ja_JP" />
   <meta name="twitter:card" content="summary" />
-  <meta name="theme-color" content="#fff" />
-  <link rel="icon" type="image/png" href="images/icon.png" />
+  <meta name="theme-color" content="#06080d" />
+  <link rel="icon" type="image/png" href="images/opt/favicon-192.png" />
+  <link rel="apple-touch-icon" href="images/opt/apple-touch-icon.png" />
   <script>
-    (function() {
-      const saved = localStorage.getItem('theme');
-      const auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', saved || auto);
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (e) {}
+      var auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-theme', saved || auto);
+      // main.js が読み込めなかった場合でもコンテンツが表示されるようにする
+      window.addEventListener('load', function () { if (!window.__vcmcReady) d.classList.remove('js'); });
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css" />
   <script src="main.js" defer></script>
 </head>
-<body>
-  <header>
+<body class="has-hero">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="index.html">
-        <img class="logo" src="images/icon.png" alt="VoiceMC logo">
-        <span>VoiceMC</span>
+      <a class="brand" href="index.html" aria-label="VoiceMC トップ">
+        <img class="brand-mark" src="images/opt/logo-mark.png" alt="" width="18" height="32">
+        <span class="brand-name">VoiceMC</span>
       </a>
-      <nav>
+      <nav class="nav-menu" aria-label="メインメニュー">
         <ul class="nav-links" id="nav-links">
           <li><a href="index.html#how-to">参加方法</a></li>
           <li><a href="index.html#features">About</a></li>
           <li><a href="rules.html">ルール</a></li>
           <li><a href="commands.html">コマンド</a></li>
-          <li><a href="vote.html" class="current">投票</a></li>
-          <li class="nav-mobile-discord" style="display:none">
-            <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
+          <li><a href="vote.html" class="current" aria-current="page">投票</a></li>
+          <li class="nav-mobile-cta">
+            <a class="btn btn--primary btn--block" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
           </li>
         </ul>
       </nav>
-      <div class="nav-right">
-        <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="テーマを切り替え">
+          <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <a class="btn btn--primary btn--sm nav-cta" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener"><i class="fa-brands fa-discord" aria-hidden="true"></i>Discordに参加</a>
+        <button class="icon-btn hamburger" id="hamburger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav-links">
           <span></span><span></span><span></span>
         </button>
-        <button class="theme-toggle" id="theme-toggle" aria-label="テーマを切り替え">
-          <svg class="icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
-        <a class="btn-primary" href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discordに参加</a>
       </div>
     </div>
   </header>
 
-  <main>
-    <div class="container page-hero">
-      <p class="section-label reveal">VOTE</p>
-      <h1 class="reveal">投票サイト</h1>
-      <p class="reveal">以下のサイトに<b>投票するごとにポイントがもらえます</b>。</p>
-    </div>
-
-    <section class="container">
-      <div class="vote-sites vote-sites--2 reveal">
-        <article class="vote-site-card reveal">
-          <h2 class="vote-site-name"><i class="fa-solid fa-check-to-slot" aria-hidden="true"></i> MinePortal</h2>
-          <p class="vote-site-desc">Minecraftサーバー検索ポータル。<b>投票すると +1ポイント</b>もらえます。24時間ごとに1回投票できます。</p>
-          <a class="btn-vote" href="https://mineportal.jp/servers/cmpf2xg6n0000bjhx1xctqnmk" target="_blank" rel="noopener">投票する ↗</a>
-        </article>
-
-        <article class="vote-site-card reveal reveal-delay-1">
-          <h2 class="vote-site-name"><i class="fa-solid fa-check-to-slot" aria-hidden="true"></i> McServ.org</h2>
-          <p class="vote-site-desc">Minecraftサーバー掲示板。<b>投票すると +1ポイント</b>もらえます。24時間ごとに1回投票できます。</p>
-          <a class="btn-vote" href="https://mcserv.org/jp/servers/vcmc" target="_blank" rel="noopener">投票する ↗</a>
-        </article>
+  <main id="main">
+    <section class="page-hero on-dark">
+      <img class="page-hero-bg" src="images/opt/2026-03-21_13.55.42-1920.webp" srcset="images/opt/2026-03-21_13.55.42-960.webp 960w, images/opt/2026-03-21_13.55.42-1920.webp 1920w" sizes="100vw" alt="" width="1920" height="1009" fetchpriority="high" decoding="async">
+      <div class="container reveal-stagger">
+        <nav aria-label="パンくずリスト">
+          <ol class="breadcrumb">
+            <li><a href="index.html">ホーム</a></li>
+            <li aria-current="page">投票</li>
+          </ol>
+        </nav>
+        <p class="eyebrow">Vote</p>
+        <h1 class="page-title">投票サイト</h1>
+        <p class="page-lead">以下のサイトに<b>投票するごとにポイントがもらえます</b>。</p>
       </div>
     </section>
 
-    <section class="container" style="padding-top:0">
-      <div class="steps-panel reveal">
-        <div class="steps-flow">
-          <div class="step-item">
-            <h3>1. サイトを開く</h3>
-            <p>上記の投票サイトから好きなページを開きます。</p>
-          </div>
-          <div class="step-item">
-            <h3>2. 投票する</h3>
-            <p>各サイトの投票ボタンを押して、VoiceMCに投票します。</p>
-          </div>
-          <div class="step-item">
-            <h3>3. ポイントGET</h3>
-            <p>投票が完了すると、<b>各サイトで +1ポイント</b>もらえます。</p>
-          </div>
-          <div class="step-item">
-            <h3>4. 特典と交換</h3>
-            <p>ゲーム内で<b>/vote shop</b>を開き、ポイントと交換します。</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- 投票サイト -->
+    <section class="section">
+      <div class="container">
+        <div class="vote-grid reveal-stagger">
+          <article class="vote-card">
+            <div class="vote-card-top">
+              <span class="tile-icon"><i class="fa-solid fa-check-to-slot" aria-hidden="true"></i></span>
+              <span class="vote-badge">+1pt / 24h</span>
+            </div>
+            <h2 class="vote-card-title">MinePortal</h2>
+            <p class="vote-card-text">Minecraftサーバー検索ポータル。<b>投票すると +1ポイント</b>もらえます。24時間ごとに1回投票できます。</p>
+            <a class="btn btn--primary btn--lg btn--block" href="https://mineportal.jp/servers/cmpf2xg6n0000bjhx1xctqnmk" target="_blank" rel="noopener">投票する<i class="fa-solid fa-arrow-up-right-from-square ext" aria-hidden="true"></i></a>
+          </article>
 
-    <section class="container" style="padding-top:20px">
-      <div class="points-panel reveal">
-        <h2 class="section-title" style="margin-bottom:28px">投票ポイント</h2>
-        <div class="points-grid">
-          <div class="points-item">
-            <div class="points-value">1pt</div>
-            <div class="points-label">1サイト投票あたり</div>
-          </div>
-          <div class="points-item">
-            <div class="points-value">24h</div>
-            <div class="points-label">投票のクールタイム</div>
-          </div>
-          <div class="points-item">
-            <div class="points-value">2pt</div>
-            <div class="points-label">1日の最大獲得数</div>
-          </div>
-        </div>
-        <p class="points-note"><b>/vote shop</b> でポイントと特典アイテムを交換できます。ポイントはゲーム内で確認できます。</p>
-
-        <div class="reward-card reveal" style="margin-top:24px">
-          <i class="fa-solid fa-dove reward-icon" aria-hidden="true"></i>
-          <div class="reward-info">
-            <div class="reward-name">エリトラ</div>
-            <div class="reward-cost"><b>150ポイント</b>で交換できます</div>
-          </div>
-          <span class="reward-badge">/voteshop</span>
+          <article class="vote-card">
+            <div class="vote-card-top">
+              <span class="tile-icon"><i class="fa-solid fa-check-to-slot" aria-hidden="true"></i></span>
+              <span class="vote-badge">+1pt / 24h</span>
+            </div>
+            <h2 class="vote-card-title">McServ.org</h2>
+            <p class="vote-card-text">Minecraftサーバー掲示板。<b>投票すると +1ポイント</b>もらえます。24時間ごとに1回投票できます。</p>
+            <a class="btn btn--primary btn--lg btn--block" href="https://mcserv.org/jp/servers/vcmc" target="_blank" rel="noopener">投票する<i class="fa-solid fa-arrow-up-right-from-square ext" aria-hidden="true"></i></a>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="container" style="padding-top:20px">
-      <div class="shop-panel reveal">
-        <h2 class="section-title" style="margin-bottom:12px">投票ショップの使い方</h2>
-        <p class="shop-intro">貯めたポイントはゲーム内の投票ショップで好きな特典と交換できます。</p>
-
-        <div>
-          <p class="shop-sub-title">開き方</p>
-          <div class="shop-open-row">
-            <span class="shop-cmd-chip">/vote shop</span>
-            <span class="shop-cmd-chip">/voteshop</span>
+    <!-- 投票の流れ -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">01</span>How it works</p>
+            <h2 class="section-title">投票の流れ</h2>
           </div>
         </div>
+        <ol class="flow reveal-stagger">
+          <li class="flow-item">
+            <span class="flow-num">01</span>
+            <h3 class="flow-title">サイトを開く</h3>
+            <p class="flow-text">上記の投票サイトから好きなページを開きます。</p>
+          </li>
+          <li class="flow-item">
+            <span class="flow-num">02</span>
+            <h3 class="flow-title">投票する</h3>
+            <p class="flow-text">各サイトの投票ボタンを押して、VoiceMCに投票します。</p>
+          </li>
+          <li class="flow-item">
+            <span class="flow-num">03</span>
+            <h3 class="flow-title">ポイントGET</h3>
+            <p class="flow-text">投票が完了すると、<b>各サイトで +1ポイント</b>もらえます。</p>
+          </li>
+          <li class="flow-item">
+            <span class="flow-num">04</span>
+            <h3 class="flow-title">特典と交換</h3>
+            <p class="flow-text">ゲーム内で<code class="kbd">/vote shop</code>を開き、ポイントと交換します。</p>
+          </li>
+        </ol>
+      </div>
+    </section>
 
-        <div>
-          <p class="shop-sub-title">購入例</p>
-          <div class="reward-card" style="padding:18px 22px">
-            <i class="fa-solid fa-dove reward-icon" style="font-size:1.8rem" aria-hidden="true"></i>
+    <!-- 投票ポイント -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">02</span>Points</p>
+            <h2 class="section-title">投票ポイント</h2>
+          </div>
+        </div>
+        <div class="hud reveal-stagger">
+          <div class="hud-item">
+            <div class="hud-value">1pt</div>
+            <div class="hud-label">1サイト投票あたり</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-value">24h</div>
+            <div class="hud-label">投票のクールタイム</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-value">2pt</div>
+            <div class="hud-label">1日の最大獲得数</div>
+          </div>
+        </div>
+        <div class="points-bottom reveal-stagger">
+          <p class="note"><code class="kbd">/vote shop</code> でポイントと特典アイテムを交換できます。ポイントはゲーム内で確認できます。</p>
+          <div class="reward">
+            <span class="item-slot"><i class="fa-solid fa-dove" aria-hidden="true"></i></span>
             <div class="reward-info">
               <div class="reward-name">エリトラ</div>
-              <div class="reward-cost"><b>150ポイント</b>で /voteshop から購入可能</div>
+              <div class="reward-cost"><b>150ポイント</b>で交換できます</div>
             </div>
+            <span class="reward-tag">/voteshop</span>
           </div>
         </div>
-
-        <div>
-          <p class="shop-sub-title">確認できること</p>
-          <ul class="shop-steps">
-            <li><span class="shop-step-num">1</span><span><b>/vote total</b>：自分の合計投票数を確認する</span></li>
-            <li><span class="shop-step-num">2</span><span><b>/vote next</b>：次に投票できるまでの待ち時間を確認する</span></li>
-            <li><span class="shop-step-num">3</span><span><b>/vote top</b>：トップ投票者ランキングを表示する</span></li>
-            <li><span class="shop-step-num">4</span><span><b>/vote streak</b>：連続投票記録を確認する</span></li>
-          </ul>
-        </div>
-
-        <p class="shop-note">詳しいコマンドは<a href="commands.html">コマンドガイド</a>をご覧ください。</p>
       </div>
     </section>
 
-    <section class="container" style="padding-top:20px">
-      <div class="shop-warning reveal">
-        <p class="shop-warning-title">注意事項</p>
-        <ul class="shop-warning-list">
-          <li>投票は各サイトで24時間に1回までです。</li>
-          <li>投票後、ポイントが反映されない場合は時間を置いてから再度確認してください。</li>
-          <li>不正な手段での投票は禁止です。</li>
-        </ul>
+    <!-- 投票ショップ -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">03</span>Vote shop</p>
+            <h2 class="section-title">投票ショップの使い方</h2>
+            <p class="section-lead">貯めたポイントはゲーム内の投票ショップで好きな特典と交換できます。</p>
+          </div>
+        </div>
+        <div class="shop-grid reveal-stagger">
+          <div class="shop-block">
+            <h3 class="shop-block-title">開き方</h3>
+            <div class="chip-row">
+              <button class="cmd-code" type="button"><code>/vote shop</code><i class="fa-solid fa-copy" aria-hidden="true"></i></button>
+              <button class="cmd-code" type="button"><code>/voteshop</code><i class="fa-solid fa-copy" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div class="shop-block">
+            <h3 class="shop-block-title">購入例</h3>
+            <div class="reward">
+              <span class="item-slot item-slot--sm"><i class="fa-solid fa-dove" aria-hidden="true"></i></span>
+              <div class="reward-info">
+                <div class="reward-name">エリトラ</div>
+                <div class="reward-cost"><b>150ポイント</b>で /voteshop から購入可能</div>
+              </div>
+            </div>
+          </div>
+          <div class="shop-block">
+            <h3 class="shop-block-title">確認できること</h3>
+            <ul class="cmd-mini">
+              <li><code class="kbd">/vote total</code>自分の合計投票数を確認する</li>
+              <li><code class="kbd">/vote next</code>次に投票できるまでの待ち時間を確認する</li>
+              <li><code class="kbd">/vote top</code>トップ投票者ランキングを表示する</li>
+              <li><code class="kbd">/vote streak</code>連続投票記録を確認する</li>
+            </ul>
+          </div>
+        </div>
+        <p class="shop-note reveal">詳しいコマンドは<a href="commands.html#vote">コマンドガイド</a>をご覧ください。</p>
+      </div>
+    </section>
+
+    <!-- 注意事項 -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="warn reveal">
+          <p class="warn-title"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>注意事項</p>
+          <ul class="warn-list">
+            <li>投票は各サイトで24時間に1回までです。</li>
+            <li>投票後、ポイントが反映されない場合は時間を置いてから再度確認してください。</li>
+            <li>不正な手段での投票は禁止です。</li>
+          </ul>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container footer-bar">
-      <div class="footer-copy">© <span id="y"></span> VoiceMC. All rights reserved.</div>
-      <div class="footer-nav">
-        <a href="rules.html">ルール</a>
-        <a href="commands.html">コマンド</a>
-        <a href="vote.html">投票</a>
-        <a href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMap</a>
-        <a href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discord</a>
+  <footer class="site-footer on-dark">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="index.html"><img src="images/opt/logo-mark.png" alt="" width="20" height="36">VoiceMC</a>
+          <p class="footer-tagline">声でつながる、Minecraftの世界。<br>Simple Voice Chat 対応 / Java版専用サーバー</p>
+          <button class="ip-chip" type="button" data-copy="vcmc.jp" aria-label="サーバーアドレス vcmc.jp をコピー"><span class="ip-chip-label">IP</span>vcmc.jp<i class="fa-solid fa-copy" aria-hidden="true"></i></button>
+        </div>
+        <nav class="footer-col" aria-label="サイト内リンク">
+          <p class="footer-title">Pages</p>
+          <ul>
+            <li><a href="index.html">トップ</a></li>
+            <li><a href="rules.html">ルール</a></li>
+            <li><a href="commands.html">コマンド</a></li>
+            <li><a href="vote.html">投票</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="外部リンク">
+          <p class="footer-title">Links</p>
+          <ul>
+            <li><a href="https://discord.gg/UC7Zgvkps8" target="_blank" rel="noopener">Discord<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+            <li><a href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMap<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+            <li><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" rel="noopener">Simple Voice Chat<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="affiliate-widget">
+        <script async src="https://ar-cdn.net/widget/v1.js" data-site-id="4419c05a-5fcf-4164-873a-0ee32c42ae98" data-variant="carousel"></script>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="y"></span> VoiceMC. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <div class="affiliate-widget">
-    <script async src="https://ar-cdn.net/widget/v1.js" data-site-id="4419c05a-5fcf-4164-873a-0ee32c42ae98" data-variant="carousel"></script>
-  </div>
-
-  <button class="back-to-top" id="back-to-top" aria-label="ページトップへ">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="ページトップへ">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 </body>
 </html>
