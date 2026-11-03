@@ -47,6 +47,7 @@
         <ul class="nav-links" id="nav-links">
           <li><a href="#how-to">参加方法</a></li>
           <li><a href="#features">About</a></li>
+          <li><a href="#servers">サーバー</a></li>
           <li><a href="rules.html">ルール</a></li>
           <li><a href="commands.html">コマンド</a></li>
           <li><a href="vote.html">投票</a></li>
@@ -275,12 +276,68 @@
       </div>
     </section>
 
-    <!-- ギャラリー -->
-    <section class="section" id="gallery">
+    <!-- サーバー紹介 -->
+    <section class="section" id="servers">
       <div class="container">
         <div class="section-head reveal">
           <div class="section-head-text">
-            <p class="eyebrow"><span class="eyebrow-num">03</span>Gallery</p>
+            <p class="eyebrow"><span class="eyebrow-num">03</span>Servers</p>
+            <h2 class="section-title">サーバー紹介</h2>
+            <p class="section-lead">ハブのNPCから、遊びたいサーバーを選んで移動できます。ハブへはいつでも <code class="kbd">/hub</code> で戻れます。</p>
+          </div>
+        </div>
+
+        <figure class="hub-shot reveal">
+          <img src="images/opt/hub-960.webp" srcset="images/opt/hub-960.webp 960w, images/opt/hub-1920.webp 1920w" sizes="(min-width: 1280px) 1200px, 100vw" alt="ハブに並んだ各サーバー行きのNPC" width="1920" height="1009" loading="lazy" decoding="async">
+          <figcaption><span class="chip chip--accent">HUB</span>ハブ（ロビー）の様子</figcaption>
+        </figure>
+
+        <div class="servers-grid reveal-stagger">
+          <article class="srv srv--smp">
+            <div class="srv-top">
+              <span class="tile-icon"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i></span>
+              <span class="srv-tag">SMP</span>
+            </div>
+            <h3 class="srv-name">メインサーバー</h3>
+            <p class="srv-text">VoiceMCのメインとなるサバイバルサーバーです。みんなと同じワールドで、建築や冒険を自由に楽しめます。</p>
+            <div class="srv-meta">
+              <span class="chip">サバイバル</span>
+            </div>
+          </article>
+
+          <article class="srv srv--resource">
+            <div class="srv-top">
+              <span class="tile-icon"><i class="fa-solid fa-gem" aria-hidden="true"></i></span>
+              <span class="srv-tag">RESOURCE</span>
+            </div>
+            <h3 class="srv-name">資源サーバー</h3>
+            <p class="srv-text">資源集めのためのサーバーです。Minecraftのバージョンが上がるタイミングで、ワールドがリセットされます。</p>
+            <div class="srv-meta">
+              <span class="chip chip--accent"><i class="fa-solid fa-rotate" aria-hidden="true"></i>バージョン更新でリセット</span>
+            </div>
+          </article>
+
+          <article class="srv srv--vd">
+            <div class="srv-top">
+              <span class="tile-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
+              <span class="srv-tag">MINIGAME</span>
+            </div>
+            <h3 class="srv-name">VillageDefense</h3>
+            <p class="srv-text">村人をアンデッドの大群から守るミニゲームです。ウェーブごとにゾンビが増えて強くなり、ウェーブに上限はありません。どこまで生き残れるか挑戦しよう。</p>
+            <div class="srv-meta">
+              <span class="chip">ミニゲーム</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ギャラリー -->
+    <section class="section section--alt" id="gallery">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head-text">
+            <p class="eyebrow"><span class="eyebrow-num">04</span>Gallery</p>
             <h2 class="section-title">サーバーの様子</h2>
           </div>
           <a class="section-link" href="https://map.vcmc.jp/" target="_blank" rel="noopener">WebMapでワールドを見る<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
@@ -290,11 +347,11 @@
     </section>
 
     <!-- サポート -->
-    <section class="section section--alt" id="support">
+    <section class="section" id="support">
       <div class="container">
         <div class="section-head reveal">
           <div class="section-head-text">
-            <p class="eyebrow"><span class="eyebrow-num">04</span>Support</p>
+            <p class="eyebrow"><span class="eyebrow-num">05</span>Support</p>
             <h2 class="section-title">お問い合わせ・サポート</h2>
           </div>
         </div>
