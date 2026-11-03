@@ -1038,6 +1038,90 @@ p { text-wrap: pretty; }
   to { transform: scale(1.4); opacity: 0; }
 }
 
+/* ── Servers（サーバー紹介） ──────────────────────────────────────────── */
+.hub-shot {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 21 / 8;
+  margin-bottom: 16px;
+  background: var(--night);
+  border: 1px solid var(--line);
+}
+.hub-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 60%;
+}
+.hub-shot figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: linear-gradient(0deg, rgba(6, 8, 13, 0.85), rgba(6, 8, 13, 0));
+}
+.hub-shot .chip--accent { color: var(--accent); background: rgba(6, 8, 13, 0.6); border-color: rgba(255, 181, 71, 0.5); }
+.servers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.srv {
+  --srv-color: var(--accent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 32px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--srv-color);
+  transition: transform 0.25s var(--ease);
+}
+.srv:hover { transform: translateY(-3px); }
+.srv--smp { --srv-color: var(--green); }
+.srv--vd { --srv-color: var(--red); }
+.srv .tile-icon { color: var(--srv-color); background: color-mix(in srgb, var(--srv-color) 14%, transparent); }
+.srv-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.srv-tag {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.srv-name {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+.srv-text {
+  flex: 1;
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--muted);
+  word-break: auto-phrase;
+}
+.srv-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 22px;
+}
+
 /* ── Gallery ───────────────────────────────────────────────────────────── */
 .gallery {
   display: grid;
@@ -2096,6 +2180,8 @@ p { text-wrap: pretty; }
   .step + .step::before { left: 48px; top: -8px; transform: rotate(135deg); }
 
   .support-grid { grid-template-columns: 1fr; }
+  .servers-grid { grid-template-columns: 1fr; }
+  .hub-shot { aspect-ratio: 16 / 9; }
   .rule-list--cols { grid-template-columns: 1fr; }
   .guide-grid { grid-template-columns: 1fr; }
   .vote-grid { grid-template-columns: 1fr; }
