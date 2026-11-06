@@ -7,6 +7,7 @@ window.__vcmcReady = true;
 (function () {
   const root = document.documentElement;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const T = (s, v) => (window.vcmcT ? window.vcmcT(s, v) : s); // 翻訳（i18n.js）
 
   // ── テーマ切り替え（ボタンを押したときだけ保存。未保存ならOSの設定に追従） ──
   (function initTheme() {
@@ -61,7 +62,7 @@ window.__vcmcReady = true;
       navLinks.classList.toggle('is-open', open);
       if (header) header.classList.toggle('is-open', open);
       hamburger.setAttribute('aria-expanded', String(open));
-      hamburger.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+      hamburger.setAttribute('aria-label', open ? T('メニューを閉じる') : T('メニューを開く'));
     };
 
     hamburger.addEventListener('click', () => setOpen(!navLinks.classList.contains('is-open')));
@@ -75,7 +76,7 @@ window.__vcmcReady = true;
         hamburger.focus();
       }
     });
-    const wide = window.matchMedia('(min-width: 861px)');
+    const wide = window.matchMedia('(min-width: 1181px)');
     const onWide = e => { if (e.matches) setOpen(false); };
     if (wide.addEventListener) wide.addEventListener('change', onWide);
   })();
@@ -152,19 +153,19 @@ window.__vcmcReady = true;
 
     const ok = await copyText(text);
     if (!ok) {
-      window.prompt('手動でコピーしてください', text);
+      window.prompt(T('手動でコピーしてください'), text);
       return;
     }
     const label = el.querySelector('[data-copy-label]');
     if (label && !label.dataset.orig) label.dataset.orig = label.textContent;
-    if (label) label.textContent = 'コピーしました';
+    if (label) label.textContent = T('コピーしました');
     el.classList.add('is-copied');
     clearTimeout(el._copyTimer);
     el._copyTimer = setTimeout(() => {
       el.classList.remove('is-copied');
       if (label) label.textContent = label.dataset.orig;
     }, 2000);
-    showToast('コピーしました', text);
+    showToast(T('コピーしました'), text);
   });
 
   // ── タブ（commands.html など） ──

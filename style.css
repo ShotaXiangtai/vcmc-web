@@ -211,6 +211,7 @@ p { text-wrap: pretty; }
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.06em;
+  white-space: nowrap;
   color: var(--nav-fg, var(--ink-2));
   transition: color 0.15s ease;
 }
@@ -2095,6 +2096,50 @@ p { text-wrap: pretty; }
 .egg-input:focus { border-color: #fff; }
 .egg-error { min-height: 1.5em; margin-bottom: 10px; font-size: 16px; color: #ff5555; }
 
+/* ── 多言語対応（i18n.js） ─────────────────────────────────────────────── */
+/* 翻訳が終わるまで本文を隠して、日本語が一瞬見えるのを防ぐ */
+.i18n-pending body { visibility: hidden; }
+
+/* 中国語：漢字は日本語フォントだと字形が違うため Noto Sans SC / TC / HK で表示する。
+   見出し用・ドット用フォントは英数字だけを読み込んでいる（各ページ head のスクリプト） */
+:root:lang(zh-CN) {
+  --font-body: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Hiragino Sans GB", system-ui, sans-serif;
+  --font-display: "Dela Gothic One", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-pixel: "DotGothic16", "Noto Sans SC", "PingFang SC", monospace;
+}
+:root:lang(zh-TW) {
+  --font-body: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-display: "Dela Gothic One", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --font-pixel: "DotGothic16", "Noto Sans TC", "PingFang TC", monospace;
+}
+:root:lang(zh-HK) {
+  --font-body: "PingFang HK", "Noto Sans HK", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-display: "Dela Gothic One", "Noto Sans HK", "PingFang HK", "Microsoft JhengHei", sans-serif;
+  --font-pixel: "DotGothic16", "Noto Sans HK", "PingFang HK", monospace;
+}
+/* 見出しの漢字は Noto の極太で表示（英数字は Dela Gothic One のまま、疑似ボールドにはしない） */
+:lang(zh) :is(.hero-title, .section-title, .cta-title, .page-title, .rule-block-title, .mod-title, .vote-card-title, .death-title) {
+  font-weight: 900;
+  font-synthesis: none;
+}
+/* 英語：字間を詰め、横に長くなるヒーロー見出しを少し小さく */
+:lang(en) body { letter-spacing: 0.01em; }
+:lang(en) .hero-title { font-size: clamp(32px, 5.4vw, 70px); }
+
+/* 言語切り替え（地球アイコンの上に透明なセレクトを重ねている） */
+.lang-switch { position: relative; }
+.lang-switch i { font-size: 17px; pointer-events: none; }
+.lang-switch select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  opacity: 0;
+  cursor: pointer;
+}
+.lang-switch:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+
 /* ── Reveal Animations ─────────────────────────────────────────────────── */
 @keyframes revealUp {
   from { opacity: 0; translate: 0 28px; }
@@ -2142,7 +2187,8 @@ p { text-wrap: pretty; }
   .footer-brand { grid-column: 1 / -1; }
 }
 
-@media (max-width: 860px) {
+/* ヘッダーのメニューが1行に収まらない幅ではハンバーガーメニューにする */
+@media (max-width: 1180px) {
   .hamburger { display: inline-grid; }
   .nav-cta { display: none; }
   .nav-links {
@@ -2174,7 +2220,9 @@ p { text-wrap: pretty; }
   }
   .nav-links a:not(.btn)::after { left: 4px; right: auto; width: 24px; bottom: 8px; }
   .nav-mobile-cta { display: block; padding-top: 20px; }
+}
 
+@media (max-width: 860px) {
   .steps { grid-template-columns: 1fr; }
   .step + .step { border-left: 0; border-top: 1px solid var(--line); }
   .step + .step::before { left: 48px; top: -8px; transform: rotate(135deg); }
@@ -2223,7 +2271,7 @@ p { text-wrap: pretty; }
   .gallery-item:last-child:nth-child(even) { grid-column: span 2; aspect-ratio: 16 / 9; }
 
   .tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tab-btn { justify-content: center; padding: 0 10px; }
+  .tab-btn { justify-content: center; padding: 6px 10px; white-space: normal; text-align: center; line-height: 1.3; }
 
   .support-list > div { grid-template-columns: 1fr; gap: 4px; }
   .cta-actions { display: grid; grid-template-columns: 1fr; }
