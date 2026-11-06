@@ -17,21 +17,67 @@
   <link rel="apple-touch-icon" href="images/opt/apple-touch-icon.png" />
   <script>
     (function () {
-      var d = document.documentElement;
+      var d = document.documentElement, w = window, i;
       d.classList.add('js');
-      var saved = null;
-      try { saved = localStorage.getItem('theme'); } catch (e) {}
-      var auto = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      d.setAttribute('data-theme', saved || auto);
+      function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+      function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+      // テーマ（保存された選択 → OSの設定）
+      d.setAttribute('data-theme', get('theme') || (w.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+      // 言語（?lang= → 保存された選択 → ブラウザの設定言語。対応外の言語は英語、検索エンジンには日本語を表示）
+      function pick(t) {
+        t = String(t || '').toLowerCase();
+        if (/^ja\b/.test(t)) return 'ja';
+        if (/^en\b/.test(t)) return 'en';
+        if (/^zh\b/.test(t)) return /hans/.test(t) ? 'zh-CN' : /-(hk|mo)\b/.test(t) ? 'zh-HK' : /hant|-tw\b/.test(t) ? 'zh-TW' : 'zh-CN';
+        return '';
+      }
+      var q = pick((location.search.match(/[?&]lang=([\w-]+)/) || [])[1]);
+      if (q) set('lang', q);
+      var lang = q || pick(get('lang'));
+      if (!lang && /bot|crawl|spider|slurp/i.test(navigator.userAgent)) lang = 'ja';
+      if (!lang) {
+        var list = navigator.languages || [navigator.language];
+        for (i = 0; i < list.length && !lang; i++) lang = pick(list[i]);
+      }
+      lang = lang || 'en';
+      w.vcmcLang = lang;
+      d.lang = lang;
+      if (lang !== 'ja') {
+        // 翻訳が終わるまで本文を隠す（i18n.js が解除。読み込めなくても3秒で解除）
+        d.classList.add('i18n-pending');
+        setTimeout(function () { d.classList.remove('i18n-pending'); }, 3000);
+      }
+
+      // フォント（中国語は漢字の字形が日本語と違うため、見出し・ドット用フォントは英数字だけ読み込み、漢字は Noto Sans SC/TC/HK で表示）
+      var g = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16';
+      var zh = { 'zh-CN': 'SC', 'zh-TW': 'TC', 'zh-HK': 'HK' }[lang];
+      var ascii = '';
+      for (i = 32; i < 127; i++) ascii += String.fromCharCode(i);
+      var fonts = zh
+        ? [g + '&display=swap&text=' + encodeURIComponent(ascii + '©●'), 'https://fonts.googleapis.com/css2?family=Noto+Sans+' + zh + ':wght@400;500;700;900&display=swap']
+        : [g + '&family=Noto+Sans+JP:wght@400;500;700;900&display=swap'];
+      fonts.forEach(function (href) {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = href;
+        document.head.appendChild(l);
+      });
+
+      // 翻訳関数（i18n.js が読み込まれると置き換わる）
+      w.vcmcT = function (s, v) { return v ? s.replace(/\{(\w+)\}/g, function (m, k) { return k in v ? v[k] : m; }) : s; };
+
       // main.js が読み込めなかった場合でもコンテンツが表示されるようにする
-      window.addEventListener('load', function () { if (!window.__vcmcReady) d.classList.remove('js'); });
+      w.addEventListener('load', function () { if (!w.__vcmcReady) d.classList.remove('js'); });
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css" />
+  <script src="i18n.js" defer></script>
   <script src="main.js" defer></script>
 </head>
 <body class="has-hero">
@@ -57,6 +103,16 @@
         </ul>
       </nav>
       <div class="nav-actions">
+        <label class="icon-btn lang-switch" title="Language / 言語">
+          <i class="fa-solid fa-globe" aria-hidden="true"></i>
+          <select id="lang-select" aria-label="Language / 言語">
+            <option value="ja" lang="ja">日本語</option>
+            <option value="en" lang="en">English</option>
+            <option value="zh-CN" lang="zh-CN">简体中文</option>
+            <option value="zh-TW" lang="zh-TW">繁體中文（台灣）</option>
+            <option value="zh-HK" lang="zh-HK">繁體中文（香港）</option>
+          </select>
+        </label>
         <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="テーマを切り替え">
           <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
