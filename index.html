@@ -523,7 +523,10 @@
   </button>
 
   <script>
-    // ── リアルタイムサーバーステータス（mcsrvstat.us） ──
+    // ── リアルタイムサーバーステータス（AutoPlugNext の公開用の口） ──
+    // AutoPlugNext が返す { online, players, max } を、Cloudflare Tunnel の公開ホスト名から読む。
+    // 管理画面とは別の名前なので、ここに書いても管理画面の場所は分からない（管理画面のアドレスは書かないこと）
+    const STATUS_URL = 'https://status.vcmc.jp/status';
     const t = (s, v) => window.vcmcT(s, v); // 翻訳（i18n.js）
     const SERVER_VERSION = '26.3'; // 表示するバージョン（サーバー更新時に書き換えてください）
     const statusCard = document.getElementById('status-card');
@@ -532,12 +535,13 @@
 
     async function fetchServerStatus() {
       try {
-        const res = await fetch('https://api.mcsrvstat.us/3/vcmc.jp');
+        const res = await fetch(STATUS_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error(String(res.status));
         const data = await res.json();
 
         if (data.online) {
-          const online = Number(data.players?.online ?? 0);
-          const max = Number(data.players?.max ?? 0);
+          const online = Number(data.players ?? 0);
+          const max = Number(data.max ?? 0);
           statusCard.dataset.state = 'online';
           statusPlayers.textContent = `${online}/${max}`;
           statusPlayers.setAttribute('aria-label', `${t('接続中のプレイヤー')} ${online} / ${max}`);
@@ -554,10 +558,10 @@
       }
     }
 
-    // 翻訳（i18n.js）が終わってから表示する。60秒ごとに自動更新
+    // 翻訳（i18n.js）が終わってから表示する。30 秒ごとに自動更新（AutoPlugNext 側は 5 秒ごとに測り、10 秒ためている）
     document.addEventListener('DOMContentLoaded', () => {
       fetchServerStatus();
-      setInterval(fetchServerStatus, 60_000);
+      setInterval(fetchServerStatus, 30_000);
     });
 
     // ── ギャラリー ──
