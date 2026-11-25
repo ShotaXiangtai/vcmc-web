@@ -524,11 +524,15 @@
 
   <script>
     // ── リアルタイムサーバーステータス（AutoPlugNext の公開用の口） ──
-    // AutoPlugNext が返す { online, players, max } を、Cloudflare Tunnel の公開ホスト名から読む。
+    // AutoPlugNext が返す { online, players, max, version } を、Cloudflare Tunnel の公開ホスト名から読む。
     // 管理画面とは別の名前なので、ここに書いても管理画面の場所は分からない（管理画面のアドレスは書かないこと）
     const STATUS_URL = 'https://status.vcmc.jp/status';
     const t = (s, v) => window.vcmcT(s, v); // 翻訳（i18n.js）
-    const SERVER_VERSION = '26.3'; // 表示するバージョン（サーバー更新時に書き換えてください）
+    // バージョンは AutoPlugNext が返す version（管理しているサーバーの Minecraft の版）に合わせる。
+    // 古い AutoPlugNext で version が無いときだけ、この値を出す
+    const FALLBACK_VERSION = '26.3';
+    // 画面に出す前に、版に使う文字（英数字・点・ハイフン）以外を取り除く
+    const cleanVersion = (v) => (typeof v === 'string' ? v.replace(/[^0-9A-Za-z.-]/g, '').slice(0, 20) : '');
     const statusCard = document.getElementById('status-card');
     const statusPlayers = document.getElementById('server-players');
     const statusText = document.getElementById('server-status');
@@ -545,7 +549,8 @@
           statusCard.dataset.state = 'online';
           statusPlayers.textContent = `${online}/${max}`;
           statusPlayers.setAttribute('aria-label', `${t('接続中のプレイヤー')} ${online} / ${max}`);
-          statusText.innerHTML = `<span class="ok">● ${t('オンライン')}</span>　${t('バージョン')} ${SERVER_VERSION}`;
+          const version = cleanVersion(data.version) || FALLBACK_VERSION;
+          statusText.innerHTML = `<span class="ok">● ${t('オンライン')}</span>　${t('バージョン')} ${version}`;
         } else {
           statusCard.dataset.state = 'offline';
           statusPlayers.textContent = '';
